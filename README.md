@@ -21,32 +21,40 @@ Dùng python đọc file output.txt và chuyển thành file wav, vẽ đồ th�
 Dùng python tạo file outout_python.txt bằng cách dùng các hàm của python để tạo ra bộ Equalizer. So sánh kết quả output.txt với file output_python.txt
 Tổng hợp mạch bằng FPGA báo cáo các resource cần sử dụng: số cell logic, số LUT, số DSP, số RAM
 ```
-## 2. Xác định các tham số, thông số
+## 2. Xác định các tham số, thông số file WAV
 ### 2.1. File format
 <img src="./Wav/imgs/wav_structure.png">
 
 Với yêu cầu sử dụng định dạng <b>wav</b> để làm việc cùng, chúng ta cũng cần xác định được các thông số đặc trưng:
 - <b>encoding</b>: Cách mã hoá
-  => PCM
+  <b>=> PCM</b>
 - <b>channels</b>: Số kênh âm thanh (1 cho mono, 2 cho stereo)
-  => mono (Đơn âm sắc)
+  <b>=> mono (Đơn âm sắc)</b>
 - <b>sample_width/bit_depth</b>: Số byte cho mỗi mẫu âm thanh
-  => 2 bytes (16 bit)
+  <b>=> 2 bytes (16 bit)</b>
 - <b>frame_rate</b>: Tần số mẫu (số mẫu âm thanh trên giây)
-  => 16 KHz (16000 mẫu/giây)
+  <b>=> 16 KHz (16000 mẫu/giây)</b>
 - <b>num_frames</b>: Số frame âm thanh
-  => Tuỳ file
+  <b>=> Tuỳ file</b>
 - <b>duration = num_frames / frame_rate</b>: Thời lượng (giây)
-  => Tuỳ file
+  <b>=> Tuỳ file</b>
 - <b>is_signed</b>: Giá trị có dấu hay không có dấu
-  => 
+  <b>=> Có dấu</b>
 - <b>is_integer</b>: Giá trị nguyên hay thực
+  <b>=> Nguyên</b>
 - <b>is_fixedpoint</b>: Giá trị dấu phẩy tĩnh hay dấu phẩy động (nếu là số thực)
+  <b>=> Không tĩnh không động</b>
 - ...
 
 ## 3. Hệ số bộ lọc
+Để có một bộ lọc tốt cần cân bằng giữa các yếu tố và thường là có sự đánh đổi lẫn nhau như chất lượng bộ lọc cao sẽ có độ trễ và độ phức tạp tính toán cao, khó triển khai phần cứng,...
+
+Các tham số bộ lọc sẽ phụ thuộc vào tính chất của tín hiệu. VD: tín hiệu có băng tần rộng thì khi chia 8 dải tầng sẽ thoải mái hơn cho việc rò rỉ, ISI giữa các vùng đáp ứng xung của các bộ lọc với nhau. Tín hiệu có độ tập trung năng lượng cao vào vùng tần số nào thì chất lượng của bộ lọc tại vùng tần số đó cần được đảm bảo hơn...
+
+Để cho đơn giản, chúng ta sẽ cố gắng thiết kế các bộ lọc với số lượng mẫu phản ứng xung giống nhau và số mẫu này là tối thiểu sao cho vẫn giữ được đặc tính cũ của tín hiệu gốc (ở mức độ tương đối, không tệ quá là được hehee). Việc này sẽ giúp việc thiết kế trên phần cứng sử dụng ngôn ngữ mô tả phần cứng dễ dàng hơn, dễ dàng tính toán, tuỳ chỉnh tổ hợp các mẫu phản ứng xung trên từng bộ lọc.
 ### 3.1. Phân tích phổ tín hiệu, phổ tần số
 #### 3.1.1. File gốc
+![](./Wav/wavs/tft.wav)
 <img src="./Wav/imgs/tft_sig_freq.png">
 <img src="./Wav/imgs/tft.png">
 

@@ -83,7 +83,7 @@ def wav_to_text(wav_file, text_file):
 
 if __name__ == "__main__":
     # Example usage:
-    file_path = './tft.wav'  # Change this to your WAV file's path
+    file_path = './wavs/tft.wav'  # Change this to your WAV file's path
     wav = Wav(file_path=file_path)
     wav.print()
 
@@ -93,4 +93,3 @@ if __name__ == "__main__":
     Sample Width (bytes): 2
     Number of Frames: 256000
     """
-256000 / 48000
