@@ -55,7 +55,7 @@ Các tham số bộ lọc sẽ phụ thuộc vào tính chất của tín hiệu
 ### 3.1. Phân tích phổ tín hiệu, phổ tần số
 #### 3.1.1. File gốc
 
-<audio src="./Wav/wavs/tft.wav" controls preload></audio>
+![](./Wav/wavs/origin_tft_1023.mp4)
 
 <img src="./Wav/imgs/tft_sig_freq.png">
 <img src="./Wav/imgs/tft.png">
