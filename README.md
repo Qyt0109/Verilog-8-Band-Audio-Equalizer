@@ -54,8 +54,11 @@ Các tham số bộ lọc sẽ phụ thuộc vào tính chất của tín hiệu
 Để cho đơn giản, chúng ta sẽ cố gắng thiết kế các bộ lọc với số lượng mẫu phản ứng xung giống nhau và số mẫu này là tối thiểu sao cho vẫn giữ được đặc tính cũ của tín hiệu gốc (ở mức độ tương đối, không tệ quá là được hehee). Việc này sẽ giúp việc thiết kế trên phần cứng sử dụng ngôn ngữ mô tả phần cứng dễ dàng hơn, dễ dàng tính toán, tuỳ chỉnh tổ hợp các mẫu phản ứng xung trên từng bộ lọc.
 ### 3.1. Phân tích phổ tín hiệu, phổ tần số
 #### 3.1.1. File gốc
+
 https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/a0692e70-c902-4dc9-9eb7-f4c0a3fb804e
+
 <img src="./Wav/imgs/tft_sig_freq.png">
+
 <img src="./Wav/imgs/tft.png">
 
 #### 3.1.2. Sử dụng các bộ lọc
