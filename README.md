@@ -54,7 +54,12 @@ Các tham số bộ lọc sẽ phụ thuộc vào tính chất của tín hiệu
 Để cho đơn giản, chúng ta sẽ cố gắng thiết kế các bộ lọc với số lượng mẫu phản ứng xung giống nhau và số mẫu này là tối thiểu sao cho vẫn giữ được đặc tính cũ của tín hiệu gốc (ở mức độ tương đối, không tệ quá là được hehee). Việc này sẽ giúp việc thiết kế trên phần cứng sử dụng ngôn ngữ mô tả phần cứng dễ dàng hơn, dễ dàng tính toán, tuỳ chỉnh tổ hợp các mẫu phản ứng xung trên từng bộ lọc.
 ### 3.1. Phân tích phổ tín hiệu, phổ tần số
 #### 3.1.1. File gốc
-![](./Wav/wavs/tft.wav)
+
+<audio controls="controls">
+  <source type="audio/wav" src="./Wav/wavs/tft.wav"></source>
+  Your browser does not support the audio element.
+</audio>
+
 <img src="./Wav/imgs/tft_sig_freq.png">
 <img src="./Wav/imgs/tft.png">
 
