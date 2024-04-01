@@ -65,6 +65,9 @@ https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/a0692e
 ##### 3.1.2.1. Các bộ lọc chất lượng cao, thực hiện trên phần mềm viết bằng Python
 Với chất lượng bộ lọc tốt, số lượng mẫu phản ứng xung (impulse response taps) N = 1023, cửa sổ Hamming.
 ###### a) LPF
+
+https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/15adc480-3bbe-4c50-8180-b1b65febd71f
+
 Lọc thông thấp (Low Pass Filter) với tần số cắt fc = 1000 (Hz)
 Đáp ứng xung (Frequency Response):
 <img src="./Wav/imgs/lpf.png">
@@ -73,6 +76,9 @@ Tín hiệu sau lọc có phổ giới hạn tối đa tương ứng với tần
 <img src="./Wav/imgs/lpf_tft.png">
 
 ###### b) HPF
+
+https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/3fd25c70-9f6b-42dc-8d69-16a0c6e711cf
+
 Lọc thông cao (High Pass Filter) với tần số cắt fc = 7000 (Hz)
 Đáp ứng xung (Frequency Response):
 <img src="./Wav/imgs/hpf.png">
@@ -81,6 +87,9 @@ Tín hiệu sau lọc có phổ giới hạn tối thiểu tương ứng với t
 <img src="./Wav/imgs/hpf_tft.png">
 
 ###### b) BPF
+
+https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/b3fd8ca6-ea07-4787-adc6-8db8b5d47939
+
 Lọc thông dải (Band Pass Filter) với tần số cắt fc = (fc_l, fc_h)  = (3000, 5000) (Hz)
 Đáp ứng xung (Frequency Response):
 <img src="./Wav/imgs/bpf.png">
