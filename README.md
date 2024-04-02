@@ -21,8 +21,8 @@ Dùng python đọc file output.txt và chuyển thành file wav, vẽ đồ th�
 Dùng python tạo file outout_python.txt bằng cách dùng các hàm của python để tạo ra bộ Equalizer. So sánh kết quả output.txt với file output_python.txt
 Tổng hợp mạch bằng FPGA báo cáo các resource cần sử dụng: số cell logic, số LUT, số DSP, số RAM
 ```
-## 2. Xác định các tham số, thông số file WAV
-### 2.1. File format
+## 2. Làm việc với file WAV
+### 2.1. Xác định các tham số, thông số file
 <img src="./Wav/imgs/wav_structure.png">
 
 Với yêu cầu sử dụng định dạng <b>wav</b> để làm việc cùng, chúng ta cũng cần xác định được các thông số đặc trưng:
@@ -45,15 +45,73 @@ Với yêu cầu sử dụng định dạng <b>wav</b> để làm việc cùng, 
 - <b>is_fixedpoint</b>: Giá trị dấu phẩy tĩnh hay dấu phẩy động (nếu là số thực)
   <b>=> Không tĩnh không động</b>
 - ...
+### 2.2. Tương tác file WAV
+#### 2.2.1. Chuyển đổi định dạng
+Trong quá trình thực hiện, chúng ta có thể cần chuyển đổi các định dạng âm thanh khác về WAV với các cài đặt về thông số như đã mô tả ở mục trước. Việc này có thể đạt được thông qua sử dụng các nền tảng chuyển đổi định dạng tệp tin trực tuyến. Ở đây tôi sử dụng trang web <a href="https://g711.org">g711.org</a>, chọn tham số phù hợp cho file đầu ra như sau:
 
-## 3. Hệ số bộ lọc
+<img src="./Wav/imgs/g711.png">
+
+#### 2.2.2. Lớp Wav để xử lý các tác vụ
+Sử dụng ngôn ngữ lập trình Python cùng với thư viện <a href="https://scipy.org">scipy</a> và <a href="https://docs.python.org/3/library/wave.html">wave</a>, tôi tạo một lớp Wav để có thể xử lý các tác vụ cần thiết lên trên file:
+- open: mở file wave với đường dẫn và đọc, lưu dữ liệu vào các thuộc tính tương ứng trong đối tượng của lớp Wav.
+- save_as: lưu đối tượng này thành một file WAV vào đường dẫn.
+- save_as_txt: lưu đối tượng này thành một file .txt vào đường dẫn. Mỗi dòng sẽ tương ứng với một mẫu giá trị biên độ của âm thanh, thể hiện dưới dạng bit. VD:
+    ```
+    . . .
+    1111110100100011
+    1111110110011101
+    1111110001110010
+    . . .
+    ```
+- resample: thay đổi sample_rate (tốc độ lấy mẫu) của đối tượng. VD: 16000 --> 20000 (Hz).
+- và một số hàm hỗ trợ khác được cung cấp trong lớp Wav này...
+## 3. Bộ lọc
 Để có một bộ lọc tốt cần cân bằng giữa các yếu tố và thường là có sự đánh đổi lẫn nhau như chất lượng bộ lọc cao sẽ có độ trễ và độ phức tạp tính toán cao, khó triển khai phần cứng,...
 
 Các tham số bộ lọc sẽ phụ thuộc vào tính chất của tín hiệu. VD: tín hiệu có băng tần rộng thì khi chia 8 dải tầng sẽ thoải mái hơn cho việc rò rỉ, ISI giữa các vùng đáp ứng xung của các bộ lọc với nhau. Tín hiệu có độ tập trung năng lượng cao vào vùng tần số nào thì chất lượng của bộ lọc tại vùng tần số đó cần được đảm bảo hơn...
 
 Để cho đơn giản, chúng ta sẽ cố gắng thiết kế các bộ lọc với số lượng mẫu phản ứng xung giống nhau và số mẫu này là tối thiểu sao cho vẫn giữ được đặc tính cũ của tín hiệu gốc (ở mức độ tương đối, không tệ quá là được hehee). Việc này sẽ giúp việc thiết kế trên phần cứng sử dụng ngôn ngữ mô tả phần cứng dễ dàng hơn, dễ dàng tính toán, tuỳ chỉnh tổ hợp các mẫu phản ứng xung trên từng bộ lọc.
-### 3.1. Phân tích phổ tín hiệu, phổ tần số
-#### 3.1.1. File gốc
+### 3.1. FIR và IIR
+#### 3.1.1. FIR
+##### 3.1.1.1. Đặc điểm
+Bộ lọc FIR có đáp ứng xung hữu hạn, có nghĩa là đáp ứng đầu ra sẽ dần dần giảm xuống không sau một số lượng mẫu hữu hạn.
+Đầu ra phụ thuộc vào hệ số của bộ lọc tích chập lên đầu vào hiện tại cũng như các mẫu trước đó.
+
+<img src="./Wav/imgs/FeedForward.png">
+
+Thường thì cấu trúc của FIR sẽ là một bộ Feedforward như hình trên. Có thể thấy FIR filter thường được thiết kế để có phản hồi xung không có phản hồi ngược, điều này có nghĩa là không có các hệ số trong hàm truyền tải phản hồi về các thành phần tính toán trước đó.
+Vì không có phản hồi ngược, FIR filter thường dễ thiết kế và ổn định hơn trong các ứng dụng yêu cầu chính xác cao.
+##### 3.1.1.2. Ưu và nhược:
+###### a) Ưu điểm:
+- <b>Đáp ứng pha tuyến tính</b>, có nghĩa là tất cả các tần số trải qua cùng một lượng trễ qua bộ lọc. Điều này quan trọng trong các ứng dụng yêu cầu bảo toàn mối quan hệ pha của tín hiệu đầu vào, đặc biệt trong <b style="color:red;">xử lý âm thanh và hình ảnh</b>.
+- <b>Ổn định</b>. Đáp ứng pha, phổ của hệ thống là an toàn, không gặp phải một số vấn đề khiến cho đầu ra của tín hiệu bị thay đổi hoàn toàn như một số trường hợp mà bộ lọc IIR có thể gặp phải.
+- <b>Dễ thiết kế, chỉnh sửa, triển khai</b>. Việc thay đổi các tham số của bộ lọc chỉ là việc thay các mẫu phản ứng xung trong các thanh ghi tính toán.
+
+###### b) Nhược điểm:
+- <b>Độ phức tạp tính toán cao</b>, đòi hỏi nhiều tài nguyên tính toán hơn so với bộ lọc IIR, đặc biệt là đối với bộ lọc cấp cao hoặc bộ lọc có số lượng tapsn (mẫu phản ứng xung h[n]) lớn.
+- <b>Đáp ứng đột ngột</b> dài hơn so với bộ lọc IIR, đặc biệt là đối với các chuyển đổi sắc nét trong miền tần số. Tức là khi tín hiệu thay đổi biên độ rất nhanh thì bộ lọc FIR sẽ cần thêm thời gian để thích ứng. Nhưng điều này không phải là một vấn đề quá lớn khi chúng ta đang focus vào ứng dụng trong audio singal, thứ mà thường sẽ có dải sóng thay đổi không quá đột ngột.
+#### 3.1.2. IIR
+##### 3.1.2.1. Đặc điểm
+Bộ lọc IIR có đáp ứng xung vô hạn, có nghĩa là đầu ra có thể phụ thuộc vào một lịch sử vô hạn các mẫu đầu vào.
+Đầu ra là đệ quy của cả đầu vào hiện tại và các mẫu đầu ra trước đó kết hợp cùng phản hồi của đầu ra.
+
+<img src="./Wav/imgs/FeedForwardBackWard.png">
+
+Thường thì cấu trúc của IIR sẽ là một bộ Feedforward kết hợp Feedbackward như hình trên.
+##### 3.1.2.2. Ưu và nhược:
+###### a) Ưu điểm:
+- Đòi hỏi ít tài nguyên tính toán hơn so với bộ lọc FIR để đạt được các đặc tính bộ lọc tương tự.
+- Hiệu quả hơn cho việc lọc dải hẹp: Bộ lọc IIR thường hiệu quả hơn cho các ứng dụng lọc dải hẹp.
+###### b) Nhược điểm:
+- <b>Biến dạng pha phi tuyến</b> có thể ảnh hưởng tới các ứng dụng yêu cầu bảo toàn mối quan hệ pha, như xử lý âm thanh, hình ảnh!
+- <b>Xuất hiện dao động không ổn định</b> trong một số điều kiện.
+- <b>Hạn chế thiết kế</b> với các đáp ứng tần số cụ thể, đặc biệt là để đạt được các đặc tính pha tuyến tính.
+#### 3.1.3. Lựa chọn loại bộ lọc
+IIR filter thường có thể đạt được hiệu suất cao hơn với số lượng bộ lọc nhỏ hơn so với FIR filter, nhưng cũng không ổn định nếu không được thiết kế cẩn thận. Ngoài ra đáp ứng pha không tuyến tính có thể khiến cho các đặc điểm gốc trong tín hiệu bị biến dạng, điều này không phù hợp cho yêu cầu của chúng ta đó chính là xử lý tín hiệu âm thanh.
+FIR filter thường được sử dụng cho các ứng dụng yêu cầu độ chính xác cao, ổn định tốt như lọc tần số cụ thể hoặc làm sạch tín hiệu, xử lý audio, image. Vậy thì chúng ta đành phải đánh đổi về mặt tài nguyên phần cứng, tốc độ xử lý, độ trễ tính toán,... để có thể thực hiện loại bộ lọc FIR lên FPGAs.
+<b>=> CHỐT: SỬ DỤNG BỘ LỌC FIR TRONG THIẾT KẾ</b>.
+### 3.2. Phân tích phổ tín hiệu, phổ tần số
+#### 3.2.1. File gốc
 
 https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/a0692e70-c902-4dc9-9eb7-f4c0a3fb804e
 
@@ -61,8 +119,8 @@ https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/a0692e
 
 <img src="./Wav/imgs/tft.png">
 
-#### 3.1.2. Sử dụng các bộ lọc
-##### 3.1.2.1. Các bộ lọc chất lượng cao, thực hiện trên phần mềm viết bằng Python
+#### 3.2.2. Sử dụng các bộ lọc
+##### 3.2.2.1. Các bộ lọc chất lượng cao, thực hiện trên phần mềm viết bằng Python
 Với chất lượng bộ lọc tốt, số lượng mẫu phản ứng xung (impulse response taps) N = 1023, cửa sổ Hamming.
 ###### a) LPF
 
