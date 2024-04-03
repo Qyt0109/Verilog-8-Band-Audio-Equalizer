@@ -135,8 +135,12 @@ Phần report + code cho hiển thị tương tác trực quan với phổ có t
 
 ##### 3.2.2.1. So sánh đáp ứng tần số và đáp ứng pha
 ###### a) Cửa sổ chữ nhật (Boxcar/rectangle) vs cửa sổ Hamming
-*Màu đỏ: Cửa sổ chữ nhật
-*Màu xanh: Cửa sổ Hamming
+
+* Màu đỏ: Cửa sổ chữ nhật
+
+* Màu xanh: Cửa sổ Hamming
+
+* __Lưu ý__: bảng tổng hợp nên hình khá nhỏ, click vào ảnh để xem rõ hơn từng trường hợp so sánh.
 
 <table>
   <thead>
@@ -172,6 +176,10 @@ Phần report + code cho hiển thị tương tác trực quan với phổ có t
 <img src="./Wav/imgs/settings.png">
 
 Nếu muốn so sánh các loại cửa sổ khác nhau, hãy dùng giao diện được cung cấp trong <a href="https://colab.research.google.com/drive/1oOBK2cRURK4gT0YH0xGaAE_VIMrqRGYk?authuser=1#scrollTo=J5cV4cfxlhZb&uniqifier=3">Code siêu đỉnh của Đào Quyết</a> để tự khám phá và đánh giá nhé!
+
+Lưu file code về Google Drive của bạn sau đó chọn __Thời gian chạy__ > __Chạy tất cả__ để bắt đầu:
+
+<img src="./Wav/imgs/instruction_colab.png">
 
 ##### 3.2.2.2. Chốt lựa chọn
 Cửa sổ Hamming là một trong những loại cửa sổ phổ biến được sử dụng trong thiết kế bộ lọc FIR cho tín hiệu âm thanh.
@@ -217,7 +225,7 @@ Lọc thông cao (High Pass Filter) với tần số cắt fc = 7000 (Hz)
 Tín hiệu sau lọc có phổ giới hạn tối thiểu tương ứng với tần số cắt, gần như không có sự rò rỉ tần số:
 <img src="./Wav/imgs/hpf_tft.png">
 
-###### b) BPF
+###### c) BPF
 
 https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/b3fd8ca6-ea07-4787-adc6-8db8b5d47939
 
@@ -227,3 +235,87 @@ Lọc thông dải (Band Pass Filter) với tần số cắt fc = (fc_l, fc_h)  
 
 Tín hiệu sau lọc có phổ giới hạn tương ứng với tần số cắt, gần như không có sự rò rỉ tần số:
 <img src="./Wav/imgs/bpf_tft.png">
+
+#### 3.2.3. Kết hợp các bộ lọc
+##### 3.2.3.1. Các phép toán trên miền thời gian và miền tần số
+Các phép toán trong miền thời gian (time domain) có ảnh hưởng đến miền tần số (frequency domain):
+- __Phép cộng (Addition)__: Trong miền thời gian, phép cộng giữa hai hàm tương đương với việc thực hiện phép cộng tương ứng giữa các thành phần tần số của hai hàm trong miền tần số.
+- __Phép nhân (Multiplication) và tích chập (Convolution)__: Phép nhân trong miền thời gian tương đương với việc thực hiện tích chập trong miền tần số và ngược lại.
+- __Đổi dấu (Time reversal) và phép phản xạ (Conjugate)__: Đổi dấu của một hàm trong miền thời gian tương đương với việc lấy phản xạ của phổ tần số của hàm đó trong miền tần số.
+- __Đẩy dịch thời gian (Time shifting)__: Đẩy dịch thời gian của một hàm trong miền thời gian tương đương với việc nhân hàm đó với một hàm có phổ tần số là hàm mũ phức số phức trong miền tần số.
+- __Scale (Tăng/giảm tỷ lệ)__: Việc tăng hoặc giảm tỷ lệ của một hàm trong miền thời gian tương đương với việc thay đổi biên độ của phổ tần số của hàm đó trong miền tần số.
+- ...
+
+Những phép toán này giúp chúng ta hiểu rõ cách các tín hiệu và hàm trong miền thời gian tương tác với nhau trong miền tần số và ngược lại. Điều này rất hữu ích trong việc phân tích và xử lý tín hiệu âm thanh.
+##### 3.2.3.2. Kết hợp sử các filter trên cùng một tín hiệu
+###### a) Phân tích vấn đề
+Chúng ta có 8 bộ lọc tương ứng với 8 dải tần và cần kết hợp chúng với nhau thể điều khiển gain từ đó tăng giảm được biên độ (Magnitude) (dB) của từng dải một. Vậy thì làm thế nào để chúng làm việc được với nhau?
+
+<img src="./Wav/imgs/8band.png">
+
+###### b) Ghép băng tần kiểm soát bởi các bộ lọc
+Giả sử tắt hết các băng tần của bộ BPF ở giữa, chúng ta chỉ đang quan tâm tới 2 dải băng LPF và HPF.
+
+Phổ tần số gốc của tín hiệu trước khi lọc:
+
+<img src="./Wav/imgs/tft_frequency_domain.png">
+
+Phổ tần số khi được lọc chỉ bằng bộ LPF:
+
+<img src="./Wav/imgs/lpf_tft_frequency_domain.png">
+
+Phổ tần số khi được lọc chỉ bằng bộ HPF:
+
+<img src="./Wav/imgs/hpf_tft_frequency_domain.png">
+
+Phổ tần số chúng ta muốn khi điều khiển dải tần kiểm soát bởi hai bộ lọc trên:
+
+<img src="./Wav/imgs/lpf_hpf_tft_frequency_domain.png">
+
+
+Với phép cộng trong miền thời gian (tổng từng mẫu tín hiệu trong 2 tập mẫu sau lọc) chúng ta dễ dàng thu được phép cộng tương ứng trong miền tần số! Easy =))). Điều này có thể được chứng minh bằng công thức chuyển đổi nhưng mà phức tạp quá nên thôi mình chứng minh bằng code luôn:
+1) Biến đổi 2 tập mẫu tín hiệu sau lọc từ miền thời gian sang miền tần số bằng phép biến đổi Fourier (Fourier transform) rồi sau đó cộng 2 miền tần số với nhau rồi lại biến đổi ngược kết quả về miền thời gian.
+   
+  <img src="./Wav/imgs/fft.png"> 
+
+  Đây là kết quả thu được:
+
+<img src="./Wav/imgs/lpf_hpf_tft_frequency_domain.png">
+
+1) Không biến đổi gì cả, chỉ đơn giản là cộng các điểm mẫu trong miền thời gian với nhau, thu được kết quả y chang:
+
+<img src="./Wav/imgs/lpf_hpf_tft_frequency_domain.png">
+
+###### b) Tăng giảm độ lợi trên một băng tần
+
+Tới đây là ta đã ghép được các băng tần tương ứng với từng bộ lọc thông qua việc cộng các mẫu tín hiệu trong miền thời gian. Vậy để kiểm soát về mặt cường độ tín hiệu trong một dải băng tần nào đó, chúng ta cần làm gì?
+
+Phổ tần số của dải băng tần tương ứng với bộ HPF:
+
+<img src="./Wav/imgs/hpf_tft_frequency_domain.png">
+
+Chúng ta muốn kiểm soát vùng này, ví dụ tăng 100 lần biên độ lên:
+
+<img src="./Wav/imgs/hlf_gain100.png">
+
+Để lúc ghép vào các băng tần khác, VD ghép với LPF thì ta thu được:
+
+<img src="./Wav/imgs/hlf_gain100_combine.png">
+
+Có thể thấy lúc này phổ trong dải HBF vọt lên hẳn so với LBF trong khi trước đó:
+
+<img src="./Wav/imgs/lpf_hpf_tft_frequency_domain.png">
+
+Nhưng để có thể kiểm soát được biên độ tín hiệu trong vùng đó thì sẽ hơi đau đầu chút vì không đơn giản chỉ là phép nhân các mẫu tín hiệu trong miền thời gian với một hệ số (factor/gain) nào đó đâu.
+
+Đây là điều sẽ xảy ra nếu chúng ta nhân trong miền thời gian:
+
+<img src="./Wav/imgs/hlf_mul100.png">
+
+Wow, tín hiệu đã hoàn toàn bị thay đổi, vùng tần số đáng ra bị cắt đã bị dôi lên và ảnh hưởng tới kết quả khi ghép các băng tần lại với nhau:
+
+<img src="./Wav/imgs/hlf_mul100_combine.png">
+
+Điều này xảy ra vì phép nhân trong miền thời gian tương ứng với phép tích chập trong miền tần số và ngược lại.
+
+###### c) Sơ đồ điều khiển băng tần dùng 8 bộ lọc

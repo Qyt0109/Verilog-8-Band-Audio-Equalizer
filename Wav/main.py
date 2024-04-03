@@ -6,10 +6,6 @@ from freq_spec import plot_frequency_spectrum
 from fir import lpf, hpf, bpf, plot_frequency_response
 from wav import Wav
 
-def fil_wav(wav:Wav, hn):
-    wav.audio_data = np.convolve(wav.audio_data, hn, mode='same')    # Assumming 16-bit PCM wav format
-    wav.audio_data = np.asarray(wav.audio_data, dtype=np.int16)  # Ensure 16-bit PCM format
-
 if __name__ == "__main__":
     file_path = "./wavs/tft.wav"
     """
@@ -60,7 +56,7 @@ if __name__ == "__main__":
     plot_frequency_spectrum(wav_lpf)
 
     h_lpf = lpf(N=N, fl=1000, fs=wav_lpf.sample_rate, window=window)
-    fil_wav(wav=wav_lpf, hn=h_lpf)
+    wav_lpf.apply_filter(hn=h_lpf)
     #plot_frequency_spectrum(wav=wav_lpf)
     # BPF
     for i in range(1, 7):
@@ -69,12 +65,12 @@ if __name__ == "__main__":
         wav_bpf = Wav(file_path=file_path)
         h_bpf = bpf(N=N, fl=i*1000, fh=(i+1)*1000, fs=wav_lpf.sample_rate, window=window)
         # Combine effect to wav_lpf
-        fil_wav(wav=wav_bpf, hn=h_bpf)
+        wav_bpf.apply_filter(hn=h_bpf)
         wav_lpf.combine_wav(wav_bpf)
     # HPF
     wav_hpf = Wav(file_path=file_path)
     h_hpf = hpf(N=N, fh=7000, fs=wav_hpf.sample_rate, window=window)
-    fil_wav(wav=wav_hpf, hn=h_hpf)
+    wav_hpf.apply_filter(hn=h_hpf)
     # Combine effect to wav_lpf
     wav_lpf.combine_wav(wav_hpf)
     # Plot combined fir filters for 8 bands
