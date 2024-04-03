@@ -1,6 +1,8 @@
+import numpy as np
 from scipy.io import wavfile
 import wave
 from scipy.signal import resample
+from scipy.fft import fft, ifft
 
 class Wav:
     def __init__(self, file_path):
@@ -51,35 +53,22 @@ class Wav:
         except Exception as e:
             print(f"Error saving file: {e}")
 
-
-# Function to read WAV file and write sample values to a text file
-def wav_to_text(wav_file, text_file):
-    with wave.open(wav_file, 'rb') as wf:
-        # Get parameters of the WAV file
-        channels = wf.getnchannels()
-        sample_width = wf.getsampwidth()
-        frame_rate = wf.getframerate()
-        num_frames = wf.getnframes()
-
-        # Make sure it's a mono file
-        if channels != 1:
-            print("Error: Input WAV file is not mono.")
-            return
-
-        # Read sample data
-        frames = wf.readframes(num_frames)
-
-    # Extract sample values
-    sample_values = []
-    for i in range(0, len(frames), sample_width):
-        sample = int.from_bytes(frames[i:i+sample_width], byteorder='little', signed=True)
-        sample_values.append(sample)
-
-    # Write sample values to text file
-    with open(text_file, 'w') as txtf:
-        for sample in sample_values:
-            txtf.write(str(sample) + '\n')
-
+    def combine_wav(self, other_wav):
+        # Determine the maximum length among the audio signals
+        this_audio = self.audio_data
+        other_audio = other_wav.audio_data
+        max_length = max(len(this_audio), len(other_audio))
+        # Ensure both signals have the same length
+        this_audio = np.pad(this_audio[:max_length], (0, max(0, max_length - len(this_audio))), 'constant')
+        other_audio = np.pad(other_audio[:max_length], (0, max(0, max_length - len(other_audio))), 'constant')
+        # Perform Fourier transform
+        this_fft = fft(this_audio)
+        other_fft = fft(other_audio)
+        # Add frequency representations
+        combined_fft = this_fft + other_fft
+        # Take inverse Fourier transform
+        combined_audio = np.real(ifft(combined_fft))
+        self.audio_data = combined_audio
 
 if __name__ == "__main__":
     # Example usage:

@@ -51,6 +51,23 @@ def bpf(N, fl, fh, fs, window='hamming'):
     h = signal.firwin(N, [fl / (fs / 2), fh / (fs / 2)], pass_zero=False, window=window)
     return h
 
+def bsf(N, fl, fh, fs, window='hamming'):
+    """
+    Design a Band Stop Filter (BPF).
+    
+    Parameters:
+        N (int): Filter length.
+        fc_low (float): Lower cut-off frequency of the filter (in Hz).
+        fc_high (float): Upper cut-off frequency of the filter (in Hz).
+        fs (float): Sampling frequency (in Hz).
+        window (str): Type of window function. Default is 'hamming'.
+    
+    Returns:
+        h (array): Impulse response of the BPF.
+    """
+    h = signal.firwin(N, [fl / (fs / 2), fh / (fs / 2)], window=window)
+    return h
+
 def plot_frequency_response(h, fs):
     w, H = signal.freqz(h, fs=fs)
     plt.figure()

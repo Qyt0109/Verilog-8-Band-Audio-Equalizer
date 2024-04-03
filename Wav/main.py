@@ -2,6 +2,7 @@ import numpy as np
 from scipy import signal
 from scipy.io import wavfile
 
+from freq_spec import plot_frequency_spectrum
 from fir import lpf, hpf, bpf, plot_frequency_response
 from wav import Wav
 
@@ -11,7 +12,7 @@ def fil_wav(wav:Wav, hn):
 
 if __name__ == "__main__":
     file_path = "./wavs/tft.wav"
-
+    """
     # Resampling file
     save_path = "./wavs/resampled_tft.wav"
     target_sample_rate = 16000 # (Hz)
@@ -47,3 +48,18 @@ if __name__ == "__main__":
     fil_wav(wav=wav, hn=hn)
     wav.save_as(save_path=save_path)
     plot_frequency_response(h=hn, fs=wav.sample_rate)
+    """
+    # LPF + HPF
+    save_path = "./wavs/lpf_hpf_filtered_tft.wav"
+    # LPF
+    wav_lpf = Wav(file_path=file_path)
+    h_lpf = lpf(N=1023, fl=1000, fs=wav_lpf.sample_rate, window='hamming')
+    fil_wav(wav=wav_lpf, hn=h_lpf)
+    plot_frequency_spectrum(wav=wav_lpf)
+    # HPF
+    wav_hpf = Wav(file_path=file_path)
+    h_hpf = hpf(N=1023, fh=7000, fs=wav_hpf.sample_rate, window='hamming')
+    fil_wav(wav=wav_hpf, hn=h_hpf)
+    plot_frequency_spectrum(wav=wav_hpf)
+    wav_lpf.combine_wav(wav_hpf)
+    plot_frequency_spectrum(wav_lpf)
