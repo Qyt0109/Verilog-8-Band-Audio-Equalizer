@@ -49,17 +49,33 @@ if __name__ == "__main__":
     wav.save_as(save_path=save_path)
     plot_frequency_response(h=hn, fs=wav.sample_rate)
     """
-    # LPF + HPF
+    # LPF + HPF + BPF
+    N = 1023
+    window = 'hamming'
+
     save_path = "./wavs/lpf_hpf_filtered_tft.wav"
     # LPF
     wav_lpf = Wav(file_path=file_path)
-    h_lpf = lpf(N=1023, fl=1000, fs=wav_lpf.sample_rate, window='hamming')
+    # Before filtering
+    plot_frequency_spectrum(wav_lpf)
+
+    h_lpf = lpf(N=N, fl=1000, fs=wav_lpf.sample_rate, window=window)
     fil_wav(wav=wav_lpf, hn=h_lpf)
-    plot_frequency_spectrum(wav=wav_lpf)
+    #plot_frequency_spectrum(wav=wav_lpf)
+    # BPF
+    for i in range(1, 7):
+        if i in [1, 6]:
+            continue
+        wav_bpf = Wav(file_path=file_path)
+        h_bpf = bpf(N=N, fl=i*1000, fh=(i+1)*1000, fs=wav_lpf.sample_rate, window=window)
+        # Combine effect to wav_lpf
+        fil_wav(wav=wav_bpf, hn=h_bpf)
+        wav_lpf.combine_wav(wav_bpf)
     # HPF
     wav_hpf = Wav(file_path=file_path)
-    h_hpf = hpf(N=1023, fh=7000, fs=wav_hpf.sample_rate, window='hamming')
+    h_hpf = hpf(N=N, fh=7000, fs=wav_hpf.sample_rate, window=window)
     fil_wav(wav=wav_hpf, hn=h_hpf)
-    plot_frequency_spectrum(wav=wav_hpf)
+    # Combine effect to wav_lpf
     wav_lpf.combine_wav(wav_hpf)
+    # Plot combined fir filters for 8 bands
     plot_frequency_spectrum(wav_lpf)
