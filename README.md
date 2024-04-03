@@ -132,6 +132,7 @@ __Phương pháp cửa sổ__ được chọn để sử dụng trong việc thi
 #### 3.2.2. Lựa chọn loại cửa sổ
 <a href="https://colab.research.google.com/drive/1oOBK2cRURK4gT0YH0xGaAE_VIMrqRGYk?authuser=1#scrollTo=J5cV4cfxlhZb&uniqifier=3"><img src="./Wav/imgs/colab.png"></a>
 Phần report + code cho hiển thị tương tác trực quan với phổ có thể được tìm thấy ở đây: <a href="https://colab.research.google.com/drive/1oOBK2cRURK4gT0YH0xGaAE_VIMrqRGYk?authuser=1#scrollTo=J5cV4cfxlhZb&uniqifier=3">Code siêu đỉnh của Đào Quyết</a>
+
 ##### 3.2.2.1. So sánh đáp ứng tần số và đáp ứng pha
 ###### a) Cửa sổ chữ nhật (Boxcar/rectangle) vs cửa sổ Hamming
 *Màu đỏ: Cửa sổ chữ nhật
@@ -167,7 +168,20 @@ Phần report + code cho hiển thị tương tác trực quan với phổ có t
 </table>
 
 ###### b) So sánh các loại cửa sổ khác
+
+<img src="./Wav/imgs/settings.png">
+
 Nếu muốn so sánh các loại cửa sổ khác nhau, hãy dùng giao diện được cung cấp trong <a href="https://colab.research.google.com/drive/1oOBK2cRURK4gT0YH0xGaAE_VIMrqRGYk?authuser=1#scrollTo=J5cV4cfxlhZb&uniqifier=3">Code siêu đỉnh của Đào Quyết</a> để tự khám phá và đánh giá nhé!
+
+##### 3.2.2.2. Chốt lựa chọn
+Cửa sổ Hamming là một trong những loại cửa sổ phổ biến được sử dụng trong thiết kế bộ lọc FIR cho tín hiệu âm thanh.
+###### a) Ưu điểm:
+- Giảm rò rỉ tần số (frequency leakage): Cửa sổ Hamming giúp giảm thiểu hiện tượng rò rỉ tần số trong quá trình biến đổi Fourier, điều này quan trọng để đảm bảo rằng bộ lọc FIR hoạt động hiệu quả trên dải tần số mong muốn mà không gây ra nhiễu ở các tần số khác.
+- Độ phản ứng bậc hai (side lobe) thấp: Cửa sổ Hamming có đặc điểm là có side lobe thấp, điều này có nghĩa là các điểm tần số bên cạnh đáp ứng chính ít ảnh hưởng đến kết quả của bộ lọc FIR.
+###### b) Nhược điểm:
+- Có độ rộng dải chuyển đổi (transition bandwidth) lớn hơn: So với một số cửa sổ khác như cửa sổ Kaiser, cửa sổ Hamming có độ rộng dải chuyển đổi lớn hơn, điều này có thể gây ra hiện tượng mất độ dốc (rolloff) nhanh hơn ở các cực tần số, có thể làm giảm hiệu suất của bộ lọc FIR trong một số ứng dụng cụ thể.
+
+__=> CHỐT: SỬ DỤNG BỘ LỌC FIR THIẾT KẾ VỚI PHƯƠNG PHÁP CỬA SỔ, LỰA CHỌN CỬA SỔ HAMMING.__
 
 ### 3.2. Phân tích phổ tín hiệu, phổ tần số
 #### 3.2.1. File gốc
