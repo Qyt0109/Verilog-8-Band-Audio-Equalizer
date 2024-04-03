@@ -207,7 +207,8 @@ Với chất lượng bộ lọc tốt, số lượng mẫu phản ứng xung (i
 
 https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/15adc480-3bbe-4c50-8180-b1b65febd71f
 
-Lọc thông thấp (Low Pass Filter) với tần số cắt fc = 1000 (Hz)
+Lọc thông thấp (Low Pass Filter) với tần số cắt fc = 1000 (Hz). Âm thanh sau khi lọc chỉ còn lại những nốt trầm, nghe ồm ồm, ầm ầm còn những âm thanh với tần số cao (chói tai) đã bị cắt bỏ.
+
 Đáp ứng xung (Frequency Response):
 <img src="./Wav/imgs/lpf.png">
 
@@ -218,7 +219,8 @@ Tín hiệu sau lọc có phổ giới hạn tối đa tương ứng với tần
 
 https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/3fd25c70-9f6b-42dc-8d69-16a0c6e711cf
 
-Lọc thông cao (High Pass Filter) với tần số cắt fc = 7000 (Hz)
+Lọc thông cao (High Pass Filter) với tần số cắt fc = 7000 (Hz). Sau khi lọc có thể nghe được âm thanh rất chói tai, vì sau khi cắt với bộ lọc thông cao, những âm thanh còn lại là những âm ở tần số cao.
+
 Đáp ứng xung (Frequency Response):
 <img src="./Wav/imgs/hpf.png">
 
@@ -229,7 +231,8 @@ Tín hiệu sau lọc có phổ giới hạn tối thiểu tương ứng với t
 
 https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/b3fd8ca6-ea07-4787-adc6-8db8b5d47939
 
-Lọc thông dải (Band Pass Filter) với tần số cắt fc = (fc_l, fc_h)  = (3000, 5000) (Hz)
+Lọc thông dải (Band Pass Filter) với tần số cắt fc = (fc_l, fc_h)  = (3000, 5000) (Hz). Sau khi cắt thì nghe cũng thấy khác khác so với âm thanh gốc nhưng không cụ thể lắm nên khá khó mô tả chi tiết.
+
 Đáp ứng xung (Frequency Response):
 <img src="./Wav/imgs/bpf.png">
 
