@@ -6,8 +6,16 @@ from scipy.fft import fft, ifft
 
 
 class Wav:
-    def __init__(self, file_path):
-        self.open(file_path)
+    def __init__(self, file_path=None):
+        if file_path:
+            self.open(file_path)
+        else:
+            self.file_path = None
+            self.sample_rate = None
+            self.audio_data = None
+            self.channels = None
+            self.sample_width = None
+            self.frames = None
 
     def open(self, file_path):
         try:
@@ -44,7 +52,7 @@ class Wav:
             len(self.audio_data) * resampling_ratio))
         self.sample_rate = target_sample_rate
 
-    def save_as_txt(self, save_path):
+    def save_as_txt(self, save_path, is_show_dec=False):
         try:
             with open(save_path, 'w') as f:
                 # Read frames and write to text file
@@ -52,9 +60,32 @@ class Wav:
                 for data in self.audio_data:
                     binary_data = format(data if data >= 0 else (
                         1 << (self.sample_width * 8)) + data, '0{}b'.format(self.sample_width * 8))
-                    f.write(f"{binary_data}:{data}\n")
+                    f.write(f"{binary_data}")
+                    if is_show_dec:
+                        f.write(f":{data}")
+                    f.write("\n")
+                print(f"Saved to {save_path}")
         except Exception as e:
             print(f"Error saving file: {e}")
+
+    def load_from_txt(self, txt_path):
+        try:
+            with open(txt_path, 'r') as f:
+                lines = f.readlines()
+                audio_samples = np.empty(len(lines), dtype=np.int16)
+                for i, line in enumerate(lines):
+                    binary_data = line.strip()
+                    # Convert binary data back to audio sample
+                    sample = int(binary_data, 2)
+                    if sample >= 1 << (self.sample_width * 8 - 1):
+                        sample -= 1 << (self.sample_width * 8)
+                    audio_samples[i] = sample
+                self.audio_data = audio_samples
+                print(f"Loaded audio samples from {txt_path}")
+        except FileNotFoundError:
+            print(f"Error: File {txt_path} not found.")
+        except Exception as e:
+            print(f"Error loading file: {e}")
 
     def combine_wav(self, other_wav):
         # Determine the maximum length among the audio signals
@@ -98,29 +129,32 @@ class Wav:
     def gain(self, factor: float):
         # Compute the Fourier transform of the audio data
         audio_fft = fft(self.audio_data)
-        
+
         # Amplify the frequency domain by multiplying with the gain factor
         audio_fft *= factor
-        
+
         # Perform the inverse Fourier transform to get the amplified audio data
         amplified_audio = np.real(ifft(audio_fft))
-        
+
         # Update the audio data with the amplified version
         self.audio_data = amplified_audio
 
-    def mul(self, factor: float):       
+    def mul(self, factor: float):
         # Update the audio data with the amplified version
         self.audio_data *= factor
+
 
 if __name__ == "__main__":
     # Example usage:
     file_path = './wavs/tft.wav'  # Change this to your WAV file's path
     wav = Wav(file_path=file_path)
-    wav.print()
+    # wav.print()
+    wav.save_as_txt(save_path="./wavs/tft.txt", is_show_dec=False)
+    wav.save_as_txt(save_path="./wavs/tft_value.txt", is_show_dec=True)
 
-    """ Example output:
-    Sample Rate: 48000
-    Channels: 1
-    Sample Width (bytes): 2
-    Number of Frames: 256000
-    """
+    wav_from_txt = Wav()
+    wav_from_txt.channels = 1
+    wav_from_txt.sample_rate = 16000
+    wav_from_txt.sample_width = 16
+    wav_from_txt.load_from_txt(txt_path="./wavs/tft.txt")
+    wav_from_txt.save_as(save_path="./wavs/wav_from_txt.wav")
