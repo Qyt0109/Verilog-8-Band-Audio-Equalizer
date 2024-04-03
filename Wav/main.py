@@ -50,7 +50,7 @@ if __name__ == "__main__":
     plot_frequency_response(h=hn, fs=wav.sample_rate)
     """
     # LPF + HPF + BPF
-    N = 1023
+    N = 63
     window = 'hamming'
 
     save_path = "./wavs/lpf_hpf_filtered_tft.wav"

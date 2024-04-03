@@ -110,6 +110,65 @@ Thường thì cấu trúc của IIR sẽ là một bộ Feedforward kết hợp
 IIR filter thường có thể đạt được hiệu suất cao hơn với số lượng bộ lọc nhỏ hơn so với FIR filter, nhưng cũng không ổn định nếu không được thiết kế cẩn thận. Ngoài ra đáp ứng pha không tuyến tính có thể khiến cho các đặc điểm gốc trong tín hiệu bị biến dạng, điều này không phù hợp cho yêu cầu của chúng ta đó chính là xử lý tín hiệu âm thanh.
 FIR filter thường được sử dụng cho các ứng dụng yêu cầu độ chính xác cao, ổn định tốt như lọc tần số cụ thể hoặc làm sạch tín hiệu, xử lý audio, image. Vậy thì chúng ta đành phải đánh đổi về mặt tài nguyên phần cứng, tốc độ xử lý, độ trễ tính toán,... để có thể thực hiện loại bộ lọc FIR lên FPGAs.
 <b>=> CHỐT: SỬ DỤNG BỘ LỌC FIR TRONG THIẾT KẾ</b>.
+
+### 3.2. Thiết kế bộ lọc FIR
+#### 3.2.1. Lựa chọn phương pháp thiết kế
+##### 3.2.1.1. Các phương pháp:
+###### a) Phương pháp cửa sổ (Window method):
+Phương pháp này bao gồm việc lấy Fourier của một phản ứng yêu cầu với hàm cửa sổ như cửa sổ Hamming, cửa sổ Blackman, cửa sổ Kaiser,... và sau đó chuyển đổi Fourier ngược trở lại để lấy được hệ số của bộ lọc FIR.
+
+<img src="./Wav/imgs/windows.png">
+
+##### b) Các phương pháp khác:
+- __Phương pháp đồng bộ (Equiripple method)__: Đây là một phương pháp thiết kế bộ lọc FIR đặc biệt dùng cho các ứng dụng yêu cầu sự đồng đều về biên độ trên dải tần số cụ thể. Ví dụ, phương pháp Parks-McClellan là một phương pháp phổ biến trong phương pháp này.
+- __Phương pháp tối thiểu bình phương (Least squares method)__: Phương pháp này tìm kiếm hệ số của bộ lọc FIR sao cho độ lỗi bình phương giữa phản ứng yêu cầu và phản ứng của bộ lọc là nhỏ nhất.
+- __Phương pháp đệ quy (Recursive method)__: Đối với các bộ lọc FIR có độ dài lớn, việc tính toán hệ số có thể trở nên tốn kém. Trong trường hợp này, có thể sử dụng phương pháp đệ quy để tính toán hệ số bộ lọc một cách hiệu quả hơn.
+- __Phương pháp tối ưu hóa (Optimization method)__: Sử dụng các thuật toán tối ưu hóa như thuật toán di truyền, thuật toán tối ưu hóa hạt giống, hoặc các phương pháp tối ưu hóa liên tục để tìm ra bộ lọc FIR tối ưu dựa trên các tiêu chí như độ trễ, độ rộng dải tần số chuyển đổi, hoặc tiêu chuẩn cụ thể khác.
+##### 3.2.1.2. Chốt lựa chọn
+__Phương pháp cửa sổ__ được chọn để sử dụng trong việc thiết kế bộ lọc FIR vì:
+- __Dễ hiểu và triển khai__: Phương pháp cửa sổ dựa trên việc lấy Fourier của phản ứng yêu cầu với một hàm cửa sổ nhất định và sau đó chuyển đổi Fourier ngược trở lại để lấy được hệ số của bộ lọc FIR. Quy trình này tương đối đơn giản và dễ triển khai.
+- __Đáp ứng tần số tốt__: Các hàm cửa sổ như cửa sổ Hamming, cửa sổ Blackman, và cửa sổ Kaiser thường được sử dụng trong phương pháp cửa sổ. Những cửa sổ này có đáp ứng tần số tốt, giảm thiểu hiện tượng rò rỉ tần số (frequency leakage) và nén tín hiệu (signal smearing) trong quá trình chuyển đổi Fourier.
+- __Kiểm soát độ rộng dải tần số chuyển đổi__: Với việc lựa chọn hàm cửa sổ phù hợp, có thể kiểm soát độ rộng của dải tần số chuyển đổi của bộ lọc FIR. Điều này quan trọng trong việc đảm bảo rằng bộ lọc chỉ áp dụng các biến đổi tần số vào dải tần số cần thiết mà không ảnh hưởng đến các thành phần tần số khác của tín hiệu.
+#### 3.2.2. Lựa chọn loại cửa sổ
+<a href="https://colab.research.google.com/drive/1oOBK2cRURK4gT0YH0xGaAE_VIMrqRGYk?authuser=1#scrollTo=J5cV4cfxlhZb&uniqifier=3"><img src="./Wav/imgs/colab.png"></a>
+Phần report + code cho hiển thị tương tác trực quan với phổ có thể được tìm thấy ở đây: <a href="https://colab.research.google.com/drive/1oOBK2cRURK4gT0YH0xGaAE_VIMrqRGYk?authuser=1#scrollTo=J5cV4cfxlhZb&uniqifier=3">Code siêu đỉnh của Đào Quyết</a>
+##### 3.2.2.1. So sánh đáp ứng tần số và đáp ứng pha
+###### a) Cửa sổ chữ nhật (Boxcar/rectangle) vs cửa sổ Hamming
+*Màu đỏ: Cửa sổ chữ nhật
+*Màu xanh: Cửa sổ Hamming
+
+<table>
+  <thead>
+    <th>N</th>
+    <th>Thông thấp</th>
+    <th>Thông cao</th>
+    <th>Thông dải</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>7</td>
+      <td><img src="./Wav/imgs/N7_LPF.png"></td>
+      <td><img src="./Wav/imgs/N7_LPF.png"></td>
+      <td><img src="./Wav/imgs/N7_BPF.png"></td>
+    </tr>
+    <tr>
+      <td>63</td>
+      <td><img src="./Wav/imgs/N63_LPF.png"></td>
+      <td><img src="./Wav/imgs/N63_LPF.png"></td>
+      <td><img src="./Wav/imgs/N63_BPF.png"></td>
+    </tr>
+    <tr>
+      <td>1023</td>
+      <td><img src="./Wav/imgs/N1023_LPF.png"></td>
+      <td><img src="./Wav/imgs/N1023_LPF.png"></td>
+      <td><img src="./Wav/imgs/N1023_BPF.png"></td>
+    </tr>
+  </tbody>
+</table>
+
+###### b) So sánh các loại cửa sổ khác
+Nếu muốn so sánh các loại cửa sổ khác nhau, hãy dùng giao diện được cung cấp trong <a href="https://colab.research.google.com/drive/1oOBK2cRURK4gT0YH0xGaAE_VIMrqRGYk?authuser=1#scrollTo=J5cV4cfxlhZb&uniqifier=3">Code siêu đỉnh của Đào Quyết</a> để tự khám phá và đánh giá nhé!
+
 ### 3.2. Phân tích phổ tín hiệu, phổ tần số
 #### 3.2.1. File gốc
 
