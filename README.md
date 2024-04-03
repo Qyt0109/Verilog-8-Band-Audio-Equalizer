@@ -34,8 +34,8 @@ Dùng python tạo file outout_python.txt bằng cách dùng các hàm của pyt
 Tổng hợp mạch bằng FPGA báo cáo các resource cần sử dụng: số cell logic, số LUT, số DSP, số RAM
 ```
 
-<a href="./chap1.md">2. Làm việc với file WAV</a>
+## <a href="./chap1.md"> >> 2. Làm việc với file WAV</a>
 
-<a href="./chap2.md">3. Bộ lọc</a>
+## <a href="./chap2.md"> >> 3. Bộ lọc</a>
 
-<a href="./chap3.md">4. Thiết kế phần cứng</a>
+## <a href="./chap3.md"> >> 4. Thiết kế phần cứng</a>
