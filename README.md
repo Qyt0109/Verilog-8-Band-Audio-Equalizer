@@ -253,7 +253,7 @@ Chúng ta có 8 bộ lọc tương ứng với 8 dải tần và cần kết h�
 
 <img src="./Wav/imgs/8band.png">
 
-###### b) Ghép băng tần kiểm soát bởi các bộ lọc
+###### b) Ghép 8 băng tần kiểm soát bởi các bộ lọc
 Giả sử tắt hết các băng tần của bộ BPF ở giữa, chúng ta chỉ đang quan tâm tới 2 dải băng LPF và HPF.
 
 Phổ tần số gốc của tín hiệu trước khi lọc:
@@ -302,20 +302,33 @@ Chúng ta muốn kiểm soát vùng này, ví dụ tăng 100 lần biên độ l
 
 <img src="./Wav/imgs/hlf_gain100_combine.png">
 
-Có thể thấy lúc này phổ trong dải HBF vọt lên hẳn so với LBF trong khi trước đó:
+ Vậy là ta đã kiểm soát được 1 dải băng tần độc lập, không ảnh hưởng tới các băng tần khác chỉ bằng việc nhân ở miền tần số. Có thể thấy lúc này phổ trong dải HBF vọt lên hẳn so với trước đó:
 
 <img src="./Wav/imgs/lpf_hpf_tft_frequency_domain.png">
 
-Nhưng để có thể kiểm soát được biên độ tín hiệu trong vùng đó thì sẽ hơi đau đầu chút vì không đơn giản chỉ là phép nhân các mẫu tín hiệu trong miền thời gian với một hệ số (factor/gain) nào đó đâu.
+__Làm thế nào để đạt được điều này?__
+
+Để có thể kiểm soát được biên độ tín hiệu trong miền tần số thì sẽ hơi đau đầu chút vì không đơn giản chỉ là phép nhân các mẫu tín hiệu trong miền thời gian với một hệ số (factor/gain) nào đó đâu.
 
 Đây là điều sẽ xảy ra nếu chúng ta nhân trong miền thời gian:
 
 <img src="./Wav/imgs/hlf_mul100.png">
 
-Wow, tín hiệu đã hoàn toàn bị thay đổi, vùng tần số đáng ra bị cắt đã bị dôi lên và ảnh hưởng tới kết quả khi ghép các băng tần lại với nhau:
+Wow, tín hiệu đã hoàn toàn bị thay đổi, vùng tần số đáng ra bị cắt đã bị dôi lên và ảnh hưởng tới kết quả khi ghép các băng tần lại với nhau. Vậy là điều khiển 1 band nhưng lại ảnh hưởng tới các band khác:
 
 <img src="./Wav/imgs/hlf_mul100_combine.png">
 
 Điều này xảy ra vì phép nhân trong miền thời gian tương ứng với phép tích chập trong miền tần số và ngược lại.
+
+Vậy chúng ta có thể nghĩ tới một số cách như sau:
+- 1) Biến đổi các mẫu tín hiệu từ miền thời gian sang miền tần số, sau đó nhân trong miền tần số rồi biến đổi ngược trở lại về miền thời gian.
+  
+  <img src="./Wav/imgs/design0.png">
+  
+- 2) Tích chập các mẫu trong miền thời gian để tương ứng với nhân trong miền tần số.
+  
+  <img src="./Wav/imgs/design1.png">
+
+- ...
 
 ###### c) Sơ đồ điều khiển băng tần dùng 8 bộ lọc
