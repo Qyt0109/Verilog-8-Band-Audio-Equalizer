@@ -1,7 +1,7 @@
-module filter_lpf (
-    in clk,
-    in clk_enable,
-    in rst,
+module filter (
+    input clk,
+    input clk_enable,
+    input rst,
 
     input signed [15:0] i_signal_sample,  // filter's i_signal_sample
 
@@ -44,9 +44,7 @@ module filter_lpf (
       .rst(rst),
 
       .phase_63(phase_63),
-      .i_signal_sample(i_signal_sample),
-
-      .o_delayed_sample(o_delayed_sample)
+      .i_signal_sample(i_signal_sample)
   );
   // delay_pipeline
 
@@ -72,15 +70,19 @@ module filter_lpf (
   // input_register
 
   // write_done_capture
+  wire o_write_done_capture, o_write_done_edge, coeffs_en;  //write_done_capture's o_write_done_capture, o_write_done_edge, coeffs_en
   write_done_capture write_done_capture_inst (
       .clk(clk),
       .rst(rst),
+      .clk_enable(clk_enable),
 
       .i_write_done(write_done),
       .i_control_phase_bar(control_phase_bar),
-      .phase_63(phase63)
+      .phase_63(phase_63),
 
-
+      .o_write_done_capture(o_write_done_capture),
+      .o_write_done_edge(o_write_done_edge),
+      .coeffs_en(coeffs_en)
   );
 
-endmodule  //filter_lpf
+endmodule  //filter
