@@ -280,3 +280,15 @@ Vậy chúng ta có thể nghĩ tới một số cách như sau:
 - ...
 
 ###### c) Sơ đồ điều khiển băng tần dùng 8 bộ lọc
+
+<table>
+    <th>
+      <a href="./chap1.md"><< CHƯƠNG TRƯỚC</a>
+    </th>
+    <th>
+      2/3
+    </th>
+    <th>
+      <a href="./chap3.md">CHƯƠNG SAU >></a>
+    </th>
+</table>

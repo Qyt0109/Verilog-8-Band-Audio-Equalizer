@@ -35,5 +35,7 @@ Tổng hợp mạch bằng FPGA báo cáo các resource cần sử dụng: số 
 ```
 
 <a href="./chap1.md">2. Làm việc với file WAV</a>
+
 <a href="./chap2.md">3. Bộ lọc</a>
+
 <a href="./chap3.md">4. Thiết kế phần cứng</a>

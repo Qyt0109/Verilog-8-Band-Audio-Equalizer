@@ -61,3 +61,15 @@ Sử dụng ngôn ngữ lập trình Python cùng với thư viện <a href="htt
 - __mul__: nhân miền thời gian của đối tượng lên.
 - __resample__: thay đổi sample_rate (tốc độ lấy mẫu) của đối tượng. VD: 16000 --> 20000 (Hz).
 - và một số hàm hỗ trợ khác được cung cấp trong lớp Wav này...
+
+<table>
+    <th>
+      <a href="./README.md"><< CHƯƠNG TRƯỚC</a>
+    </th>
+    <th>
+      1/3
+    </th>
+    <th>
+      <a href="./chap2.md">CHƯƠNG SAU >></a>
+    </th>
+</table>
