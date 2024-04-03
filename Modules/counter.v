@@ -4,7 +4,7 @@ module counter (
     input            rst,
     output reg [5:0] current_count
 );
-  always @(posedge clk or posedge rst) begin : p_count
+  always @(posedge clk or posedge rst) begin
     if (rst == 1) begin
       current_count <= 6'b111111;
     end else begin
