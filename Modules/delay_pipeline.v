@@ -2,6 +2,8 @@ module delay_pipeline (
     input clk,
     input rst,
 
+    input [5:0] current_count,  // current_count from counter
+
     input               phase_63,        // from phase_check's phase_63
     // signed fixed-point 16 bit with 15 bit for fraction. Value range [-1, 1)
     input signed [15:0] i_signal_sample, // from filter's i_signal_sample
@@ -35,5 +37,11 @@ module delay_pipeline (
 
   // Output the delayed sample
   assign o_delayed_sample = delay_pipeline[NUMBER_OF_PIPE-1];
+
+
+  // MUXs
+  // mux control
+  wire signed [15:0] inputmux_1;
+  assign inputmux_1 = delay_pipeline[current_count];
 
 endmodule  //delay_pipeline

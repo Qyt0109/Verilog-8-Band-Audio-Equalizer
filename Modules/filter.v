@@ -85,4 +85,6 @@ module filter (
       .coeffs_en(coeffs_en)
   );
 
+  // write_done_capture
+
 endmodule  //filter
