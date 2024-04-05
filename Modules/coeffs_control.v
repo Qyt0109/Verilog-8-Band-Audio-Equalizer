@@ -16,13 +16,12 @@ module coeffs_control (
     output signed [15:0] product_mux
 );
 
-  localparam NUMBER_OF_COEFFS = 64;
 
   // Coeffs registers
   // coeffs_assigned to assign coeffs_in at an address, else assign by coresponding coeffs_regs
-  wire signed [15:0] coeffs_assigned[0:NUMBER_OF_COEFFS-1];
-  wire signed [15:0] coeffs_temp    [0:NUMBER_OF_COEFFS-1];
-  reg signed  [15:0] coeffs_regs    [0:NUMBER_OF_COEFFS-1];
+  wire signed [15:0] coeffs_assigned[0:63];
+  wire signed [15:0] coeffs_temp    [0:63];
+  reg signed  [15:0] coeffs_regs    [0:63];
 
   // Linking mem and address to storing new coeffs_in values
   genvar i;
@@ -35,8 +34,8 @@ module coeffs_control (
     end
   endgenerate
 
-  reg [5:0] coeffs_regs_reset_index;
-  reg [5:0] coeffs_regs_index;
+  integer coeffs_regs_reset_index;
+  integer coeffs_regs_index;
 
   // Coeffs registers process
   always @(posedge clk or posedge rst) begin
@@ -44,7 +43,7 @@ module coeffs_control (
       // Reset all coeffs registers
       for (
           coeffs_regs_reset_index = 0;
-          coeffs_regs_reset_index < NUMBER_OF_COEFFS;
+          coeffs_regs_reset_index < 64;
           coeffs_regs_reset_index = coeffs_regs_reset_index + 1
       ) begin
         coeffs_regs[coeffs_regs_reset_index] <= 0;
@@ -54,7 +53,7 @@ module coeffs_control (
       if (clk_enable == 1) begin
         for (
             coeffs_regs_index = 0;
-            coeffs_regs_index < NUMBER_OF_COEFFS;
+            coeffs_regs_index < 64;
             coeffs_regs_index = coeffs_regs_index + 1
         ) begin
           coeffs_regs[coeffs_regs_index] <= coeffs_temp[coeffs_regs_index];
@@ -64,17 +63,17 @@ module coeffs_control (
   end
 
   // Coeffs shadow register
-  reg signed [15:0] coeffs_shadow[0:NUMBER_OF_COEFFS-1];
+  reg signed [15:0] coeffs_shadow[0:63];
 
-  reg [5:0] coeffs_shadow_reset_index;
-  reg [5:0] coeffs_shadow_index;
+  integer coeffs_shadow_reset_index;
+  integer coeffs_shadow_index;
 
   always @(posedge clk or posedge rst) begin
     if (rst == 1) begin
       // Reset all coeffs shadow registers
       for (
           coeffs_shadow_reset_index = 0;
-          coeffs_shadow_reset_index < NUMBER_OF_COEFFS;
+          coeffs_shadow_reset_index < 64;
           coeffs_shadow_reset_index = coeffs_shadow_reset_index + 1
       ) begin
         coeffs_shadow[coeffs_shadow_reset_index] <= 0;
@@ -84,7 +83,7 @@ module coeffs_control (
         // coeffs_shadow <= coeffs_regs if coeffs_en
         for (
             coeffs_shadow_index = 0;
-            coeffs_shadow_index < NUMBER_OF_COEFFS;
+            coeffs_shadow_index < 64;
             coeffs_shadow_index = coeffs_shadow_index + 1
         ) begin
           coeffs_shadow[coeffs_shadow_index] <= coeffs_regs[coeffs_shadow_index];
