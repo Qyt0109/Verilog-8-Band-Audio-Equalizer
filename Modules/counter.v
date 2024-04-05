@@ -1,7 +1,8 @@
 module counter (
-    input            clk,
-    input            clk_enable,
-    input            rst,
+    input clk,
+    input clk_enable,
+    input rst,
+
     output reg [5:0] current_count
 );
   always @(posedge clk or posedge rst) begin

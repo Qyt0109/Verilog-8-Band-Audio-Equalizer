@@ -10,8 +10,8 @@ module input_register (
 
     output reg o_write_enable,
     output reg o_write_done,
-    output reg o_write_address,
-    output reg o_coeffs_in
+    output reg [5:0] o_write_address,
+    output reg signed [15:0] o_coeffs_in
 );
   always @(posedge clk or posedge rst) begin
     if (rst == 1) begin

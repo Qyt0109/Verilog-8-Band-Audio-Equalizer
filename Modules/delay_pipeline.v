@@ -8,8 +8,6 @@ module delay_pipeline (
     // signed fixed-point 16 bit with 15 bit for fraction. Value range [-1, 1)
     input signed [15:0] i_signal_sample, // from filter's i_signal_sample
 
-    output signed [15:0] o_delayed_sample,
-
     output signed [15:0] input_mux
 );
 
@@ -36,10 +34,6 @@ module delay_pipeline (
       end
     end
   end
-
-  // Output the delayed sample
-  assign o_delayed_sample = delay_pipeline[NUMBER_OF_PIPE-1];
-
 
   // MUXs
   // mux control

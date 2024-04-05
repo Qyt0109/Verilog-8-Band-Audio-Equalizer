@@ -1,11 +1,12 @@
 module compute (
     input clk,
     input rst,
-
     input clk_enable,
 
     input signed [15:0] input_mux,  // input_mux from delay_pipeline
+    
     input signed [15:0] product_mux,  // product_mux from coeffs_control
+
     input phase_0,  // phase_0 from phase_check
     input phase_63,  // phase_63 from phase_check
 
