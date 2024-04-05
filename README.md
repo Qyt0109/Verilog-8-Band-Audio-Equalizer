@@ -39,3 +39,5 @@ Tổng hợp mạch bằng FPGA báo cáo các resource cần sử dụng: số 
 ## <a href="./chap2.md"> >> 3. Bộ lọc</a>
 
 ## <a href="./chap3.md"> >> 4. Thiết kế phần cứng</a>
+
+## <a href="./references.md"> >> References</a>

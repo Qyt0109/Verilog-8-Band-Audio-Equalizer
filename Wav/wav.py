@@ -56,6 +56,11 @@ class Wav:
         try:
             with open(save_path, 'w') as f:
                 # Read frames and write to text file
+                if is_show_dec:
+                    f.write(f"Max value: {max(self.audio_data)}\n")
+                    f.write(f"Min value: {min(self.audio_data)}\n")
+                    f.write(f"Max abs value: {max(abs(self.audio_data))}\n")
+                    f.write(f"Min abs value: {min(abs(self.audio_data))}\n")
                 # Write sample values to text file
                 for data in self.audio_data:
                     binary_data = format(data if data >= 0 else (
