@@ -5,6 +5,13 @@ Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  
 Top level modules:
 	compute
 
+} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/phase_check.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/phase_check.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module phase_check
+
+Top level modules:
+	phase_check
+
 } {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/filter.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/filter.v
 Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
 -- Compiling module filter
@@ -19,12 +26,12 @@ Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  
 Top level modules:
 	coeffs_control
 
-} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/phase_check.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/phase_check.v
+} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/filter_tb.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/filter_tb.v
 Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
--- Compiling module phase_check
+-- Compiling module filter_tb
 
 Top level modules:
-	phase_check
+	filter_tb
 
 } {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/write_done_capture.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/write_done_capture.v
 Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
@@ -33,12 +40,12 @@ Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  
 Top level modules:
 	write_done_capture
 
-} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/counter.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/counter.v
+} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/input_register.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/input_register.v
 Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
--- Compiling module counter
+-- Compiling module input_register
 
 Top level modules:
-	counter
+	input_register
 
 } {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/delay_pipeline.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/delay_pipeline.v
 Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
@@ -47,11 +54,11 @@ Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  
 Top level modules:
 	delay_pipeline
 
-} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/input_register.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/input_register.v
+} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/counter.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/Modules/counter.v
 Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
--- Compiling module input_register
+-- Compiling module counter
 
 Top level modules:
-	input_register
+	counter
 
 } {} {}}

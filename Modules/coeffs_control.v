@@ -1,3 +1,5 @@
+`timescale 1 ns / 1 ns
+
 module coeffs_control (
     input clk,
     input rst,

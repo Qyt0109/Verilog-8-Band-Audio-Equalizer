@@ -1,3 +1,5 @@
+`timescale 1 ns / 1 ns
+
 module filter (
     input clk,
     input clk_enable,
@@ -118,7 +120,7 @@ module filter (
 
   // endregion coeffs_control
 
-  // region
+  // region compute
   compute compute_inst (
       .clk(clk),
       .rst(rst),

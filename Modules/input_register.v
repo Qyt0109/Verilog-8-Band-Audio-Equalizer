@@ -1,3 +1,5 @@
+`timescale 1 ns / 1 ns
+
 module input_register (
     input clk,
     input rst,

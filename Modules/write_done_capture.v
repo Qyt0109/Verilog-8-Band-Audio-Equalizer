@@ -1,3 +1,5 @@
+`timescale 1 ns / 1 ns
+
 module write_done_capture (
     input clk,
     input rst,

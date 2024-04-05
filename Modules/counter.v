@@ -1,3 +1,5 @@
+`timescale 1 ns / 1 ns
+
 module counter (
     input clk,
     input clk_enable,

@@ -1,34 +1,19 @@
+`timescale 1 ns / 1 ns
+
 module compute (
     input clk,
     input rst,
     input clk_enable,
 
     input signed [15:0] input_mux,  // input_mux from delay_pipeline
-    
+
     input signed [15:0] product_mux,  // product_mux from coeffs_control
 
     input phase_0,  // phase_0 from phase_check
-    input phase_63,  // phase_63 from phase_check
+    input phase_63, // phase_63 from phase_check
 
     output reg signed [15:0] filtered_sample
 );
-
-  /*
-  wire signed [15:0] inputmux_1;  // sfix16_En15
-  reg signed [32:0] acc_final;  // sfix33_En31
-  reg signed [32:0] acc_out_1;  // sfix33_En31
-  wire signed [30:0] product_1;  // sfix31_En31
-  wire signed [15:0] product_1_mux;  // sfix16_En15
-  wire signed [31:0] mul_temp;  // sfix32_En30
-  wire signed [32:0] prod_typeconvert_1;  // sfix33_En31
-  wire signed [32:0] acc_sum_1;  // sfix33_En31
-  wire signed [32:0] acc_in_1;  // sfix33_En31
-  wire signed [32:0] add_signext;  // sfix33_En31
-  wire signed [32:0] add_signext_1;  // sfix33_En31
-  wire signed [33:0] add_temp;  // sfix34_En31
-  wire signed [15:0] output_typeconvert;  // sfix16_En31
-  reg signed [15:0] output_register;  // sfix16_En31
-  */
 
   // Product
   wire signed [31:0] mul_temp;

@@ -1,3 +1,5 @@
+`timescale 1 ns / 1 ns
+
 module delay_pipeline (
     input clk,
     input rst,
@@ -12,6 +14,7 @@ module delay_pipeline (
 );
 
   localparam NUMBER_OF_PIPE = 64;
+  integer pipe_reset_index;
   integer pipe_index;
 
   // Define shift register
@@ -20,8 +23,12 @@ module delay_pipeline (
   always @(posedge clk or posedge rst) begin
     if (rst == 1) begin
       // Reset the shift register
-      for (pipe_index = 0; pipe_index < NUMBER_OF_PIPE; pipe_index = pipe_index + 1) begin
-        delay_pipeline[pipe_index] <= 0;
+      for (
+          pipe_reset_index = 0;
+          pipe_reset_index < NUMBER_OF_PIPE;
+          pipe_reset_index = pipe_reset_index + 1
+      ) begin
+        delay_pipeline[pipe_reset_index] <= 0;
       end
     end else begin
       if (phase_63 == 1) begin
@@ -37,6 +44,6 @@ module delay_pipeline (
 
   // MUXs
   // mux control
-  assign input_mux   = delay_pipeline[current_count];
+  assign input_mux = delay_pipeline[current_count];
 
 endmodule  //delay_pipeline
