@@ -8,7 +8,9 @@ module delay_pipeline (
     // signed fixed-point 16 bit with 15 bit for fraction. Value range [-1, 1)
     input signed [15:0] i_signal_sample, // from filter's i_signal_sample
 
-    output signed [15:0] o_delayed_sample
+    output signed [15:0] o_delayed_sample,
+
+    output signed [15:0] input_mux
 );
 
   localparam NUMBER_OF_PIPE = 64;
@@ -41,7 +43,6 @@ module delay_pipeline (
 
   // MUXs
   // mux control
-  wire signed [15:0] inputmux_1;
-  assign inputmux_1 = delay_pipeline[current_count];
+  assign input_mux   = delay_pipeline[current_count];
 
 endmodule  //delay_pipeline

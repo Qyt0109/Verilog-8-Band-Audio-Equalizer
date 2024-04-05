@@ -12,7 +12,7 @@ module filter (
 
 
 );
-  // counter
+  // region counter
   wire [5:0] current_count;  // from counter's current_count
 
   counter counter_inst (
@@ -22,9 +22,9 @@ module filter (
 
       .current_count(current_count)
   );
-  // counter
+  // endregion counter
 
-  // phase_check
+  // region phase_check
   wire phase_63, phase_0, control_phase_bar; // from phase_check's phase_63, phase_0, control_phase_bar
 
   phase_check phase_check_inst (
@@ -36,9 +36,9 @@ module filter (
       .phase_0(phase_0),
       .control_phase_bar(control_phase_bar)
   );
-  // phase_check
+  // endregion phase_check
 
-  // delay_pipeline
+  // region delay_pipeline
   delay_pipeline delay_pipeline_inst (
       .clk(clk),
       .rst(rst),
@@ -46,9 +46,9 @@ module filter (
       .phase_63(phase_63),
       .i_signal_sample(i_signal_sample)
   );
-  // delay_pipeline
+  // endregion delay_pipeline
 
-  // input_register
+  // region input_register
   wire write_enable, write_done, write_address, coeffs_in; // from input_register's o_write_enable, o_write_done, o_write_address, o_coeffs_in
 
   input_register input_register_inst (
@@ -67,9 +67,9 @@ module filter (
       .o_coeffs_in(coeffs_in)
   );
 
-  // input_register
+  // endregion input_register
 
-  // write_done_capture
+  // region write_done_capture
   wire o_write_done_capture, o_write_done_edge, coeffs_en;  //write_done_capture's o_write_done_capture, o_write_done_edge, coeffs_en
   write_done_capture write_done_capture_inst (
       .clk(clk),
@@ -85,6 +85,22 @@ module filter (
       .coeffs_en(coeffs_en)
   );
 
-  // write_done_capture
+  // endregion write_done_capture
+
+  // region coeffs_control
+  coeffs_control coeffs_control_inst (
+      .clk(clk),
+      .rst(rst),
+      .clk_enable(clk_enable),
+
+      .current_count(current_count),  // current_count from counter
+
+      .coeffs_en(coeffs_en),  // coeffs_en from write_done_capture
+
+      .write_address(write_address),  // o_write_address from input_register
+      .coeffs_in    (coeffs_in),      // o_coeffs_in from input_register
+      .write_enable (write_enable),   // o_write_enable from input_register
+  );
+  // endregion coeffs_control
 
 endmodule  //filter

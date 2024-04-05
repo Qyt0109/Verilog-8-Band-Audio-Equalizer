@@ -9,7 +9,9 @@ module coeffs_control (
 
     input        [ 5:0] write_address,  // o_write_address from input_register
     input signed [15:0] coeffs_in,      // o_coeffs_in from input_register
-    input               write_enable    // o_write_enable from input_register
+    input               write_enable,   // o_write_enable from input_register
+
+    output signed [15:0] product_mux
 );
 
   localparam NUMBER_OF_COEFFS = 64;
@@ -91,7 +93,7 @@ module coeffs_control (
 
   // MUXs
   // mux control
-  wire signed [15:0] product_1_mux;
-  assign product_1_mux = coeffs_shadow[current_count];
+
+  assign product_mux = coeffs_shadow[current_count];
 
 endmodule  //coeffs_control
