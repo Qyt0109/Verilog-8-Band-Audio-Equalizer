@@ -4,7 +4,6 @@ from scipy import signal
 
 from numberic import fixed_point_binary_to_float, float_to_fixed_point_binary
 
-
 def lpf(N, fl, fs, window='hamming', fh=None):
     """
     Design a Low Pass Filter (LPF).
@@ -21,7 +20,6 @@ def lpf(N, fl, fs, window='hamming', fh=None):
     h = signal.firwin(N, fl / (fs / 2), window=window)
     return h
 
-
 def hpf(N, fh, fs, window='hamming', fl=None):
     """
     Design a High Pass Filter (HPF).
@@ -37,7 +35,6 @@ def hpf(N, fh, fs, window='hamming', fl=None):
     """
     h = signal.firwin(N, fh / (fs / 2), window=window, pass_zero=False)
     return h
-
 
 def bpf(N, fl, fh, fs, window='hamming'):
     """
@@ -57,7 +54,6 @@ def bpf(N, fl, fh, fs, window='hamming'):
                       pass_zero=False, window=window)
     return h
 
-
 def bsf(N, fl, fh, fs, window='hamming'):
     """
     Design a Band Stop Filter (BPF).
@@ -75,7 +71,6 @@ def bsf(N, fl, fh, fs, window='hamming'):
     h = signal.firwin(N, [fl / (fs / 2), fh / (fs / 2)], window=window)
     return h
 
-
 def plot_frequency_response(h, fs):
     w, H = signal.freqz(h, fs=fs)
     plt.figure()
@@ -85,7 +80,6 @@ def plot_frequency_response(h, fs):
     plt.ylabel('Magnitude (dB)')
     plt.grid(True)
     plt.show()
-
 
 def quantize_hn(hn, total_bits=16, fraction_bits=15, is_signed=True, as_binary=False):
     quantized_hn = []

@@ -4,6 +4,8 @@
 
 <a href="https://s3-ap-southeast-1.amazonaws.com/gtusitecirculars/uploads/Final%20Thesis_532284.pdf">ENHANCED DESIGN OF DIGITAL FILTER AND ITS IMPLEMENTATION ON FPGA</a>
 
+<a href="https://www.waves.com/plugins/geq-graphic-equalizer#video-geq-graphic-equalizer-review-by-hugh-johnson">30 bands graphic equalizer</a>
+
 <a href="https://123.physics.ucdavis.edu/week_5_files/filters/digital_filter.pdf">INTRODUCTION TO DIGITAL FILTERS</a>
 
 <a href="http://oldversion.stu.edu.vn/uploads/documents/310810-113112.pdf">THIẾT KẾ BỘ LỌC SỐ</a>
