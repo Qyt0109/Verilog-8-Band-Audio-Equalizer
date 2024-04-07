@@ -193,6 +193,8 @@ Phổ tần số của tín hiệu sau khi đi qua bộ lọc đã được cắ
 
 Thời gian trễ của tín hiệu khi đi qua bộ lọc trên lý thuyết ~ (số taps của bộ lọc / 2) * thời gian 1 mẫu tín hiệu = (63/2) * (1/16 KHz) ~ 2 ms. Trong thực tế khi kiểm tra bằng phần mềm đo đạc dạng sóng của file WAV cũng cho kết quả tương tự.
 
+<img src="./Wav/test/63delay_app.png">
+
 Phổ tín hiệu trước lọc:
 
 <img src="./Wav/test/i_impulse.png">
@@ -213,8 +215,6 @@ Testbench đọc 2000 mẫu tín hiệu đầu tiên và đưa vào thực thể
 <img src="./Wav/test/2000samples.png">
 
 Phổ tần số của tín hiệu sau khi đi qua bộ lọc đã được cắt tại tần số đúng như mong muốn. Tín hiệu sau lọc có đường chuyển tiếp mềm mại hơn rất nhiều do tất cả vùng tần số cao của tín hiệu đã bị cắt bỏ.
-
-<img src="./Wav/test/63delay_app.png">
 
 Phổ tín hiệu trước lọc:
 
