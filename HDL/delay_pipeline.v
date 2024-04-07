@@ -1,7 +1,9 @@
 module delay_pipeline (
     input clk,
     input rst,
+
     input phase_0,  // phase_0 from counter to trigger a new sample of filter_in to be shifted in
+    input [5:0] current_count,  // current_count from counter to select a filter_in at specific time delay
 
     input signed [15:0] filter_in,  // filter_in from filter
 

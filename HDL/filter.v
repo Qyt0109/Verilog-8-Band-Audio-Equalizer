@@ -32,6 +32,7 @@ module filter (
       .rst(rst),
 
       .phase_0(phase_0),
+      .current_count(current_count),
 
       .filter_in(filter_in),
 
@@ -50,6 +51,19 @@ module filter (
   // endregion coeffs
 
   // region compute
+  compute compute_inst (
+      .clk(clk),
+      .rst(rst),
+      .clk_enable(clk_enable),
+
+      .delay_filter_in(delay_filter_in),
+
+      .coeff(coeff),
+
+      .phase_0(phase_0),
+
+      .filter_out(filter_out)
+  );
 
   // endregion compute
 
