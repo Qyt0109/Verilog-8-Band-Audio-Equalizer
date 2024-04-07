@@ -5,13 +5,13 @@ module filter (
     input clk_enable,
     input rst,
 
-    input signed [15:0] i_signal_sample,  // filter's i_signal_sample
+    input signed [15:0] filter_in,      // signed integer 16 bit. [-32768, 32768 - 1]
     input               write_enable,
     input               write_done,
-    input        [ 5:0] write_address,
-    input signed [15:0] coeffs_in,
+    input        [ 5:0] write_address,  // unsigned integer 6 bit. [0, 64 - 1]
+    input signed [15:0] coeffs_in,      // signed fixed-point 16 bit, 18 frac. [-0.125, 0.125 - 3.814697265625e-06]
 
-    output signed [15:0] o_filtered_signal_sample
+    output signed [15:0] filter_out  // signed integer 16 bit. [-32768, 32768 - 1]
 );
   // region counter
   wire [5:0] current_count;  // from counter's current_count
@@ -49,8 +49,8 @@ module filter (
       .rst(rst),
       .current_count(current_count),
 
-      .phase_63(phase_63),
-      .i_signal_sample(i_signal_sample),
+      .phase_63 (phase_63),
+      .filter_in(filter_in),
 
       .input_mux(input_mux)
   );
@@ -133,7 +133,7 @@ module filter (
       .phase_0 (phase_0),
       .phase_63(phase_63),
 
-      .filtered_sample(o_filtered_signal_sample)
+      .filter_out(filter_out)
   );
 
   // endregion

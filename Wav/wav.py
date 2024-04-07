@@ -57,6 +57,8 @@ class Wav:
             with open(save_path, 'w') as f:
                 # Read frames and write to text file
                 if is_show_dec:
+                    f.write(f"Sample Width (bit): {self.sample_width * 8}\n")
+                    f.write(f"Number of Frames/Samples: {len(self.audio_data)}\n")
                     f.write(f"Max value: {max(self.audio_data)}\n")
                     f.write(f"Min value: {min(self.audio_data)}\n")
                     f.write(f"Max abs value: {max(abs(self.audio_data))}\n")
