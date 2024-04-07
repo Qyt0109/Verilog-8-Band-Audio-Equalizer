@@ -5,11 +5,11 @@ To find a x b, we can ignore the binary point of a and b, perform the multiplica
 and, then, put the binary point to the left of the m th bit of the product to obtain the correct multiplication result.
 
 ##### coeffs:
-- signed fixed-point 16.18
-- [-0.125, 0.125 - 3.814697265625e-06]
+- signed fixed-point 16.16
+- [-0.5, 0.5 - 1.52587890625e-05]
 
 ##### input/output wav audio sample:
-- signed integer 16.0
+- signed integer 16
 - [-32768, 32768 - 1]
 
 ##### internal computing register:
