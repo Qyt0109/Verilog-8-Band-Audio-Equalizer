@@ -152,16 +152,17 @@ class Wav:
 
 
 if __name__ == "__main__":
+    """
     # Example usage:
     file_path = './wavs/tft.wav'  # Change this to your WAV file's path
     wav = Wav(file_path=file_path)
     # wav.print()
     wav.save_as_txt(save_path="./wavs/tft.txt", is_show_dec=False)
     wav.save_as_txt(save_path="./wavs/tft_value.txt", is_show_dec=True)
-
+    """
     wav_from_txt = Wav()
     wav_from_txt.channels = 1
     wav_from_txt.sample_rate = 16000
     wav_from_txt.sample_width = 16
-    wav_from_txt.load_from_txt(txt_path="./wavs/tft.txt")
-    wav_from_txt.save_as(save_path="./wavs/wav_from_txt.wav")
+    wav_from_txt.load_from_txt(txt_path="./o_tft_bin.txt")
+    wav_from_txt.save_as(save_path="./o_tft_bin.wav")
