@@ -3,7 +3,7 @@
       <a href="./chap1.md"><< CHƯƠNG TRƯỚC</a>
     </th>
     <th>
-      2/3
+      2/4
     </th>
     <th>
       <a href="./chap3.md">CHƯƠNG SAU >></a>
@@ -286,7 +286,7 @@ Vậy chúng ta có thể nghĩ tới một số cách như sau:
       <a href="./chap1.md"><< CHƯƠNG TRƯỚC</a>
     </th>
     <th>
-      2/3
+      2/4
     </th>
     <th>
       <a href="./chap3.md">CHƯƠNG SAU >></a>

@@ -40,4 +40,6 @@ Tổng hợp mạch bằng FPGA báo cáo các resource cần sử dụng: số 
 
 ## <a href="./chap3.md"> >> 4. Thiết kế phần cứng</a>
 
+## <a href="./chap4.md"> >> 5. Thử nghiệm</a>
+
 ## <a href="./references.md"> >> References</a>
