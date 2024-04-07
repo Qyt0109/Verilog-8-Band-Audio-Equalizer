@@ -183,7 +183,17 @@ Các mẫu âm thanh (đầu vào) của hệ thống là 16 bit số nguyên c�
 ### 4.x. Thử nghiệm
 #### Thử nghiệm với testbench
 ##### Tín hiệu xung delta Dirac (impulse)
-Kích hoạt xung Dirac với biên độ dương tối đa (32767) trong một mẫu tín hiệu 16 bit. Truyền xung này vào thực thể uut của module low pass filter N=63 với tần số cắt fc = 1000 KHz. Phổ tín hiệu theo thời gian và phổ tần số của đầu vào, đầu ra:
+
+<img src="./Wav/test/impulse.webp">
+
+Kích hoạt xung Dirac với biên độ dương tối đa (32767) trong một mẫu tín hiệu 16 bit. Truyền xung này vào thực thể uut của module low pass filter N=63 với tần số cắt fc = 1000 KHz. Kết quả mô phỏng:
+
+* Màu đỏ: Tín hiệu vào (impulse)
+* Màu vàng: Tín hiệu sau khi lọc
+
+<img src="./Wav/test/impulse_tb.png">
+
+Phổ tín hiệu theo thời gian và phổ tần số của đầu vào, đầu ra:
 
 <img src="./Wav/test/impulse.png">
 
@@ -210,7 +220,14 @@ Sử dụng xung Dirac cho ta cái nhìn tổng quan nhất về sự ảnh hư�
 ##### File âm thanh
 Sử dụng file <a href="./Wav/wavs/tft.txt">tft.txt</a> được tạo ra từ việc đọc các mẫu tín hiệu trong file WAV gốc <a href="./Wav/wavs/tft.wav">tft.txt</a> bằng các phương thức được cung cấp trong lớp Wav tại code <a href="./Wav/wav.py">wav.py</a>.
 
-Testbench đọc 2000 mẫu tín hiệu đầu tiên và đưa vào thực thể uut của module low pass filter N=63 với tần số cắt fc = 1000 KHz. Phổ tín hiệu, phổ tần số của 2000 mẫu tín hiệu gốc được đưa vào và lấy ra đầu ra tương ứng:
+Testbench đọc 2000 mẫu tín hiệu đầu tiên và đưa vào thực thể uut của module low pass filter N=63 với tần số cắt fc = 1000 KHz. Kết quả mô phỏng:
+
+* Màu đỏ: Tín hiệu vào (impulse)
+* Màu vàng: Tín hiệu sau khi lọc
+
+<img src="./Wav/test/2000txt.png">
+
+Phổ tín hiệu, phổ tần số của 2000 mẫu tín hiệu gốc được đưa vào và lấy ra đầu ra tương ứng:
 
 <img src="./Wav/test/2000samples.png">
 
