@@ -24,6 +24,21 @@ module filter (
   );
   // endregion counter
 
+  // region delay_pipeline
+  wire signed [15:0] delay_filter_in;
+
+  delay_pipeline delay_pipeline_inst (
+      .clk(clk),
+      .rst(rst),
+
+      .phase_0(phase_0),
+
+      .filter_in(filter_in),
+
+      .delay_filter_in(delay_filter_in)
+  );
+  // endregion delay_pipeline
+
   // region coeffs
   wire signed [15:0] coeff;
 
@@ -33,5 +48,9 @@ module filter (
       .coeff(coeff)
   );
   // endregion coeffs
+
+  // region compute
+
+  // endregion compute
 
 endmodule

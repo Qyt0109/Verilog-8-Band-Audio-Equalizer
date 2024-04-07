@@ -1,9 +1,11 @@
 module delay_pipeline (
-    input [5:0] current_count,  // current_count from counter to select which delay slot to output back
+    input clk,
+    input rst,
+    input phase_0,  // phase_0 from counter to trigger a new sample of filter_in to be shifted in
 
     input signed [15:0] filter_in,  // filter_in from filter
 
-    output signed [15:0] input_mux  // same as filter_input datatype. signed integer 16 bit. [-32768, 32768 - 1]
+    output signed [15:0] delay_filter_in  // same as filter_input datatype. signed integer 16 bit. [-32768, 32768 - 1]
 );
 
   localparam NUMBER_OF_PIPE = 64;
@@ -16,11 +18,7 @@ module delay_pipeline (
   always @(posedge clk or posedge rst) begin
     if (rst == 1) begin
       // Reset shift registers
-      for (
-          pipe_index = 0;
-          pipe_index < NUMBER_OF_PIPE;
-          pipe_index = pipe_index + 1
-      ) begin
+      for (pipe_index = 0; pipe_index < NUMBER_OF_PIPE; pipe_index = pipe_index + 1) begin
         delay_pipeline[pipe_index] <= 0;
       end
     end else begin
@@ -38,7 +36,7 @@ module delay_pipeline (
 
   // MUX
   // current_count loop through any delay_pipeline, which is current and in the past input samples
-  // input_mux return each delay_pipeline at current_count index, which is the input sample in a specific delayed time
-  assign input_mux = delay_pipeline[current_count];
+  // delay_filter_in return each delay_pipeline at current_count index, which is the input sample in a specific delayed time
+  assign delay_filter_in = delay_pipeline[current_count];
 
 endmodule  //delay_pipeline
