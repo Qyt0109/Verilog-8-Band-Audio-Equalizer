@@ -77,6 +77,16 @@ Vẫn có thể nhận thấy được rò rỉ tần số tại dải chuyển 
 
 ###### b) Toàn bộ file âm thanh
 
+
+
+https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/5e475d88-ac65-480f-92d0-5a5e4b2b8689
+
+
+
+https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/d1bc3307-f9cc-442d-8508-e1315ec42382
+
+
+
 <img src="./Wav/test/full_tb.png">
 <img src="./Wav/test/full.png">
 <img src="./Wav/test/i_full_tft.png">
