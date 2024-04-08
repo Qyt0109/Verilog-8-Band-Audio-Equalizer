@@ -49,6 +49,7 @@ Phổ tín hiệu sau lọc:
 Sử dụng xung Dirac cho ta cái nhìn tổng quan nhất về sự ảnh hưởng của bộ lọc lên miền tần số vì tất cả năng lượng phổ của nó đều có giá trị bằng nhau và xuyên suốt mọi tần số có thể.
 
 ##### File âm thanh
+###### a) 2000 mẫu đầu tiên
 Sử dụng file <a href="./Wav/wavs/tft.txt">tft.txt</a> được tạo ra từ việc đọc các mẫu tín hiệu trong file WAV gốc <a href="./Wav/wavs/tft.wav">tft.txt</a> bằng các phương thức được cung cấp trong lớp Wav tại code <a href="./Wav/wav.py">wav.py</a>.
 
 Testbench đọc 2000 mẫu tín hiệu đầu tiên và đưa vào thực thể uut của module low pass filter N=63 với tần số cắt fc = 1000 KHz. Kết quả mô phỏng:
@@ -73,6 +74,13 @@ Phổ tín hiệu sau lọc:
 <img src="./Wav/test/o_filter.png">
 
 Vẫn có thể nhận thấy được rò rỉ tần số tại dải chuyển tiếp, nhưng để đánh giá thì cần sử dụng các phương pháp tính toán chứ không "nhìn bằng mắt ta có" được.
+
+###### b) Toàn bộ file âm thanh
+
+<img src="./Wav/test/full_tb.png">
+<img src="./Wav/test/full.png">
+<img src="./Wav/test/i_full_tft.png">
+<img src="./Wav/test/o_full_tft.png">
 
 <table>
     <th>

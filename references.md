@@ -14,4 +14,6 @@
 
 <a href="https://en.wikipedia.org/wiki/Quantization_(signal_processing)#:~:text=Quantization%2C%20in%20mathematics%20and%20digital,typical%20examples%20of%20quantization%20processes.">Quantization</a>
 
+https://www.irjet.net/archives/V3/i6/IRJET-V3I636.pdf
+
 . . .
