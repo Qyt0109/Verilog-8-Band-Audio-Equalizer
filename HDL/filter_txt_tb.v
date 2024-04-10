@@ -69,11 +69,13 @@ module filter_txt_tb;
 
   initial  //Input & Output data
     begin
-      $dumpfile("./Test/test_txt.vcd");
+      $dumpfile("./Test/test_txt_x4.vcd");
       $dumpvars;
       // Input data for filter_in_data_log
       $readmemb("./Test/tft.txt", filter_in_data_log_force);
     end
+
+  integer filter_in_data_log_force_address;
 
   integer infile_txt;  //file descriptors
   initial begin
@@ -95,8 +97,6 @@ module filter_txt_tb;
   always @(posedge phase_1) begin
     $fdisplay(outfile_txt, "%b", filter_out);  //write as binary
   end
-
-  integer filter_in_data_log_force_address;
 
   // Signals
 

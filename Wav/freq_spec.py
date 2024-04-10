@@ -23,10 +23,10 @@ def plot_frequency_spectrum(wav:Wav):
 
 if __name__ == "__main__":
     # Example usage
-    file_path = "./test/i_impulse_bin.wav"
+    file_path = "./test/o_tft_bin.wav"
     wav = Wav(file_path=file_path)
     plot_frequency_spectrum(wav=wav)
 
-    file_path = "./test/o_impulse_bin.wav"
+    file_path = "./test/o_tft_x4_bin.wav"
     wav = Wav(file_path=file_path)
     plot_frequency_spectrum(wav=wav)

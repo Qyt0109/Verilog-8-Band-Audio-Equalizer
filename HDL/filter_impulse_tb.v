@@ -1,3 +1,5 @@
+// python compile.py filter filter.v counter.v delay_pipeline.v coeffs.v compute.v filter_impluse_tb.v 
+
 `timescale 1 ns / 1 ns
 
 module filter_impluse_tb;
@@ -65,10 +67,12 @@ module filter_impluse_tb;
 
 
   reg signed [15:0] filter_in_data_log_force[0:MAX_ADDRESS_filter_in_data_log];
+  reg [NUMBER_OF_FILTERS*GAIN_BITS-1:0] amplifier_gains_data_log_force[0:MAX_ADDRESS_filter_in_data_log];
   reg signed [15:0] filter_out_expected[0:MAX_ADDRESS_filter_out];
 
 
   integer filter_in_data_log_force_address;
+  integer amplifier_gains_data_log_force_address;
 
   localparam IMPULSE_ADDRESS = 30;
   localparam IMPULSE_VALUE = 16'h7fff;
@@ -92,6 +96,22 @@ module filter_impluse_tb;
         end
         $fdisplay(infile_txt, "%b",
                   filter_in_data_log_force[filter_in_data_log_force_address]);  //write as binary
+      end
+
+      for (
+        amplifier_gains_data_log_force_address = 0;
+        amplifier_gains_data_log_force_address < MAX_ADDRESS_filter_in_data_log/2;
+        amplifier_gains_data_log_force_address = amplifier_gains_data_log_force_address + 1
+      ) begin
+        amplifier_gains_data_log_force[amplifier_gains_data_log_force_address] = {((NUMBER_OF_FILTERS*GAIN_BITS)/2){2'b01}};
+      end
+
+      for (
+        amplifier_gains_data_log_force_address = MAX_ADDRESS_filter_in_data_log/2 + 1;
+        amplifier_gains_data_log_force_address < MAX_ADDRESS_filter_in_data_log;
+        amplifier_gains_data_log_force_address = amplifier_gains_data_log_force_address + 1
+      ) begin
+        amplifier_gains_data_log_force[amplifier_gains_data_log_force_address] = {((NUMBER_OF_FILTERS*GAIN_BITS)/2){2'b11}};
       end
 
     end
@@ -129,17 +149,32 @@ module filter_impluse_tb;
   wire signed [15:0] filter_out_refTmp;  // sfix16
   reg signed [15:0] regout;  // sfix16
 
+
+  parameter FILTER_IN_BITS = 16;
+  parameter FILTER_OUT_BITS = 16;
+  parameter NUMBER_OF_FILTERS = 8;
+  parameter GAIN_BITS = 2;
+
   // Module Instances
   reg clk;  // boolean
   reg clk_enable;  // boolean
   reg rst;  // boolean
+  reg amplifier_enable = 1;
+  reg [NUMBER_OF_FILTERS*GAIN_BITS-1:0] amplifier_gains;
   reg signed [15:0] filter_in;  // sfix16
   wire signed [15:0] filter_out;  // sfix16
 
-  filter uut (
+  filter #(
+    .FILTER_IN_BITS(FILTER_IN_BITS),
+    .FILTER_OUT_BITS(FILTER_OUT_BITS),
+    .NUMBER_OF_FILTERS(NUMBER_OF_FILTERS),
+    .GAIN_BITS(GAIN_BITS)
+  ) uut (
       .clk(clk),
       .clk_enable(clk_enable),
       .rst(rst),
+      .amplifier_enable(amplifier_enable),
+      .amplifier_gains(amplifier_gains),
       .filter_in(filter_in),
       .filter_out(filter_out)
   );
