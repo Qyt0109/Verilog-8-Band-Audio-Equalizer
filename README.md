@@ -13,6 +13,10 @@
 # Verilog-8-Band-Audio-Equalizer
 Verilog project for a 8 Band Audio Equalizer implement on FPGAs
 
+![](./HDL/images/testbench.JPG)
+
+![](./Wav/test/full.png)
+
 ## 1. SPEC
 ```
 Thiết kế bộ cân bằng âm thanh. 
