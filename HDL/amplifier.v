@@ -31,6 +31,20 @@ module amplifier #(
   │                                                                   (floor) │
   │                                                                           │
   └───────────────────────────────────────────────────────────────────────────┘
+  ┌────────────────────────────────────────────────────────────┐
+  │(s)iii_iiii_iiii_iiii * (s)iii_ii.ff                        │
+  │=                                                           │
+  │(s)iii_ii|ii_iiii_iiii_iiii_ii|.ff                          │
+  │                                                            │
+  │if ((s == 0) & (iii_ii != 000_00)) => positive overflowed   │
+  │=> |01_1111_1111_1111_11|                                   │
+  │                                                            │
+  │elsif ((s == 1) & (iii_ii) != 111_11) => negative overflowed│
+  │=> |10_0000_0000_0000_00|                                   │
+  │                                                            │
+  │else => not overflowed                                      │
+  │=> |ii_iiii_iiii_iiii_ii|                                   │
+  └────────────────────────────────────────────────────────────┘
   */
   wire signed [GAIN_BITS-1:0] w_gains[0:NUMBER_OF_FILTERS];
   wire signed [PRODUCT_BITS-1:0] product[0:NUMBER_OF_FILTERS];

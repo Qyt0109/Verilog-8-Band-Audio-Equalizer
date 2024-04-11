@@ -82,6 +82,20 @@ module compute #(
   │                                                                   (floor) │
   │                                                                           │
   └───────────────────────────────────────────────────────────────────────────┘
+  ┌────────────────────────────────────────────────────────────┐
+  │(s)iii_iiii_iiii_iiii * (s)iii_ii.ff                        │
+  │=                                                           │
+  │(s)iii_ii|ii_iiii_iiii_iiii_ii|.ff                          │
+  │                                                            │
+  │if ((s == 0) & (iii_ii != 000_00)) => positive overflowed   │
+  │=> |01_1111_1111_1111_11|                                   │
+  │                                                            │
+  │elsif ((s == 1) & (iii_ii) != 111_11) => negative overflowed│
+  │=> |10_0000_0000_0000_00|                                   │
+  │                                                            │
+  │else => not overflowed                                      │
+  │=> |ii_iiii_iiii_iiii_ii|                                   │
+  └────────────────────────────────────────────────────────────┘
   */
   localparam ACC_FINAL_BITS = PRODUCT_BITS + 2;  // = FILTER_IN_BITS + COEFF_BITS + 2
   localparam ACC_FINAL_SIGN_BIT = ACC_FINAL_BITS - 1;  // Location of Sign bit
