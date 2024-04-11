@@ -1,0 +1,12 @@
+Analysis & Synthesis Status : Failed - Thu Apr 11 15:55:29 2024
+Quartus Prime Version : 22.1std.2 Build 922 07/20/2023 SC Lite Edition
+Revision Name : equalizer
+Top-level Entity Name : equalizer
+Family : Cyclone V
+Logic utilization (in ALMs) : N/A until Partition Merge
+Total registers : N/A until Partition Merge
+Total pins : N/A until Partition Merge
+Total virtual pins : N/A until Partition Merge
+Total block memory bits : N/A until Partition Merge
+Total PLLs : N/A until Partition Merge
+Total DLLs : N/A until Partition Merge

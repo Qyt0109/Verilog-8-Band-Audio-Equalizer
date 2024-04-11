@@ -1,2 +1,0 @@
-Remove phase63 signal, remove phase_check.v modulde and include its functionaries in counter.v module instead
-Simplified many process to handle the delay pipeline and coeffs convolution stuffs
