@@ -3,7 +3,7 @@
       << CHƯƠNG TRƯỚC
     </th>
     <th>
-      0/3
+      0/5
     </th>
     <th>
       <a href="./chap1.md">CHƯƠNG SAU >></a>
@@ -42,8 +42,10 @@ Tổng hợp mạch bằng FPGA báo cáo các resource cần sử dụng: số 
 
 ## <a href="./chap2.md"> >> 3. Bộ lọc</a>
 
-## <a href="./chap3.md"> >> 4. Thiết kế phần cứng</a>
+## <a href="./chap3.md"> >> 4. Thiết kế phần cứng, quy tắc và quy ước</a>
 
-## <a href="./chap4.md"> >> 5. Thử nghiệm</a>
+## <a href="./chap4.md"> >> 5. Thiết kế bộ lọc và bộ cân bằng âm thanh</a>
+
+## <a href="./chap5.md"> >> 6. Thử nghiệm</a>
 
 ## <a href="./references.md"> >> References</a>

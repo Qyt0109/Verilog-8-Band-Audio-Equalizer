@@ -3,14 +3,14 @@
       <a href="./chap2.md"><< CHƯƠNG TRƯỚC</a>
     </th>
     <th>
-      3/4
+      3/5
     </th>
     <th>
       <a href="./chap4.md">CHƯƠNG SAU >>
     </th>
 </table>
 
-## 4. Thiết kế phần cứng
+## 4. Thiết kế phần cứng, quy tắc và quy ước
 
 ### 4.1. Biểu diễn số trong thiết kế
 
@@ -180,29 +180,13 @@ Sau khi các mẫu được lượng tử hoá, khi so sánh đáp ứng tần s
 Các mẫu âm thanh (đầu vào) của hệ thống là 16 bit số nguyên có dấu, trong khi đó các hệ số bộ lọc lại là 16 bit số thực có dấu, chủ yếu biểu diễn giá trị thập phân. Việc tính toán phép nhân cho 2 loại dữ liệu trên có thể được phân ra thành một số cách:
 - TODO: cách nhân
 
-### 4.2. Các thiết kế
-
-#### Thiết kế song song tất thảy (fully parallel)
-
-<img src="./HDL/images/parallel.png">
-
-#### Thiết kế song song tất thảy cải tiến (improved fully parallel)
-
-#### Đường ống tuần tự hoá thiết kế (Serial pipeline the design)
-
-<img src="./HDL/images/serial_pipeline.jpg">
-
-##### Tuần tự tất thảy (fully serial)
-
-##### Tuần tự thành phần/thác đổ (partly/cascade serial)
-
 
 <table>
     <th>
       <a href="./chap2.md"><< CHƯƠNG TRƯỚC</a>
     </th>
     <th>
-      3/4
+      3/5
     </th>
     <th>
       <a href="./chap4.md">CHƯƠNG SAU >>

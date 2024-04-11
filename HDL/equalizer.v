@@ -45,7 +45,6 @@ module equalizer #(
 
   wire [COUNTER_BITS-1:0] current_count;
   wire phase_min;
-  wire phase_max;
 
   counter #(
       .COUNTER_MIN(COUNTER_MIN),
@@ -56,8 +55,7 @@ module equalizer #(
       .rst(rst),
 
       .current_count(current_count),
-      .phase_min(phase_min),
-      .phase_max(phase_max)
+      .phase_min(phase_min)
   );
   // endregion counter
 
@@ -103,66 +101,35 @@ module equalizer #(
     for (
         filter_index = 0; filter_index < NUMBER_OF_FILTERS; filter_index = filter_index + 1
     ) begin : gen_filters
+
       // region amplifier generate
       assign v_amplified_filter_ins[filter_index] = amplified_filter_ins[(filter_index+1)*FILTER_IN_BITS-1:filter_index*FILTER_IN_BITS];
       // endregion amplifier generate
 
-      // region delay_pipeline generate
-      delay_pipeline #(
-          .FILTER_IN_BITS(FILTER_IN_BITS),
-          .FILTER_OUT_BITS(FILTER_OUT_BITS),
-          .COUNTER_BITS(COUNTER_BITS),
-          .NUMBER_OF_TAPS(NUMBER_OF_TAPS)
-      ) delay_pipeline_inst (
-          .clk(clk),
-          .rst(rst),
-
-          .phase_min(phase_min),
-          .current_count(current_count),
-
-          .filter_in(v_amplified_filter_ins[filter_index]),
-
-          .delay_filter_in(delay_filter_in[filter_index])
-      );
-      // endregion delay_pipeline generate
-
-      // region coeffs generate
-
-      coeffs #(
-          .COUNTER_BITS(COUNTER_BITS),
-          .NUMBER_OF_TAPS(NUMBER_OF_TAPS),
-          .COEFF_BITS(COEFF_BITS)
-      ) coeffs_inst (
-          .current_count(current_count),
-          .coeffs(coeffs[filter_index]),
-
-          .coeff(coeff[filter_index])
-      );
-      // endregion coeffs generate
-
       // region compute generate
       assign filtered_outs[(filter_index+1)*FILTER_OUT_BITS-1:filter_index*FILTER_OUT_BITS] = filtered_out[filter_index];
+      // endregion computer generate
 
-      compute #(
+      // region filter generate
+      filter #(
           .FILTER_IN_BITS(FILTER_IN_BITS),
           .FILTER_OUT_BITS(FILTER_OUT_BITS),
+          .COUNTER_BITS(COUNTER_BITS),
           .NUMBER_OF_TAPS(NUMBER_OF_TAPS),
           .COEFF_BITS(COEFF_BITS),
           .COEFF_FRAC_BITS(COEFF_FRAC_BITS)
-      ) compute_inst (
+      ) filter_inst (
           .clk(clk),
           .rst(rst),
           .clk_enable(clk_enable),
-
-          .delay_filter_in(delay_filter_in[filter_index]),
-
-          .coeff(coeff[filter_index]),
-
           .phase_min(phase_min),
-
-          .filter_out(filtered_out[filter_index])
+          .amplified_filter_in(v_amplified_filter_ins[filter_index]),
+          .current_count(current_count),
+          .coeffs_feed(coeffs[filter_index]),
+          .filtered_out(filtered_out[filter_index])
       );
-      // endregion computer generate
+
+      // endregion filter generate
     end
   endgenerate
   // region generate filters

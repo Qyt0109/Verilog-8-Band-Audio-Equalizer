@@ -1,0 +1,59 @@
+//Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/equalizer.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/equalizer.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module equalizer
+
+Top level modules:
+	equalizer
+
+} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/equalizer_8band.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/equalizer_8band.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module equalizer_8band
+
+Top level modules:
+	equalizer_8band
+
+} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/coeffs.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/coeffs.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module coeffs
+
+Top level modules:
+	coeffs
+
+} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/equalizer_tb.v {2 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/equalizer_tb.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module equalizer_tb
+** Warning: //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/equalizer_tb.v(177): (vlog-2226) The inline genvar declaration for 'amplifier_gain_index' is only legal in SystemVerilog.
+Use -error for strict enforcement.
+
+Top level modules:
+	equalizer_tb
+
+} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/delay_pipeline.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/delay_pipeline.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module delay_pipeline
+
+Top level modules:
+	delay_pipeline
+
+} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/counter.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/counter.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module counter
+
+Top level modules:
+	counter
+
+} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/compute.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/compute.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module compute
+
+Top level modules:
+	compute
+
+} {} {}} //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/amplifier.v {1 {vlog -work work -stats=none //Mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/amplifier.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module amplifier
+
+Top level modules:
+	amplifier
+
+} {} {}}

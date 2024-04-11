@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CGXFC7C7F23C8
-set_global_assignment -name TOP_LEVEL_ENTITY equalizer
+set_global_assignment -name TOP_LEVEL_ENTITY equalizer_8band
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 22.1STD.2
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "15:30:50  APRIL 11, 2024"
 set_global_assignment -name LAST_QUARTUS_VERSION "22.1std.2 Lite Edition"
@@ -60,7 +60,8 @@ set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name TEXT_FILE ../filter_coeffs/filters_coeffs.txt
+set_global_assignment -name VERILOG_FILE ../filter.v
+set_global_assignment -name VERILOG_FILE ../equalizer_8band.v
 set_global_assignment -name VERILOG_FILE ../equalizer.v
 set_global_assignment -name VERILOG_FILE ../delay_pipeline.v
 set_global_assignment -name VERILOG_FILE ../counter.v

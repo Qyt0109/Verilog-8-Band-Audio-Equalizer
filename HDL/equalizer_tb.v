@@ -85,21 +85,6 @@ module equalizer_tb;
     end
 
   integer infile_txt;  //file descriptors
-
-  /*
-  initial  //Input & Output data
-    begin
-      infile_txt = $fopen("./Test/i_filter_in.txt", "w");
-      // Input data for filter_in_data_log
-      for (
-          integer filter_in_data_log_force_address = 0;
-          filter_in_data_log_force_address < MAX_ADDRESS_filter_in_data_log;
-          filter_in_data_log_force_address = filter_in_data_log_force_address + 1
-      ) begin
-        $fdisplay(infile_txt, "%b", filter_in_data_log_force[filter_in_data_log_force_address]);
-      end
-    end
-  */
   integer outfile_filter_out;
   integer outfile_lpf_1000hz;
   integer outfile_bpf_1000hz2000hz;
@@ -120,18 +105,6 @@ module equalizer_tb;
     outfile_bpf_5000hz6000hz = $fopen("./Test8Band/output_txt/o_bpf_5000hz6000hz.txt", "w");
     outfile_bpf_6000hz7000hz = $fopen("./Test8Band/output_txt/o_bpf_6000hz7000hz.txt", "w");
     outfile_hpf_7000hz = $fopen("./Test8Band/output_txt/o_hpf_7000hz.txt", "w");
-  end
-
-  always @(posedge phase_1) begin
-    $fdisplay(outfile_filter_out, "%b", filter_out);  //write as binary
-    $fdisplay(outfile_lpf_1000hz, "%b", filter_lpf_1000hz);  //write as binary
-    $fdisplay(outfile_bpf_1000hz2000hz, "%b", filter_bpf_1000hz2000hz);  //write as binary
-    $fdisplay(outfile_bpf_2000hz3000hz, "%b", filter_bpf_2000hz3000hz);  //write as binary
-    $fdisplay(outfile_bpf_3000hz4000hz, "%b", filter_bpf_3000hz4000hz);  //write as binary
-    $fdisplay(outfile_bpf_4000hz5000hz, "%b", filter_bpf_4000hz5000hz);  //write as binary
-    $fdisplay(outfile_bpf_5000hz6000hz, "%b", filter_bpf_5000hz6000hz);  //write as binary
-    $fdisplay(outfile_bpf_6000hz7000hz, "%b", filter_bpf_6000hz7000hz);  //write as binary
-    $fdisplay(outfile_hpf_7000hz, "%b", filter_hpf_7000hz);  //write as binary
   end
 
   // Signals
@@ -169,7 +142,7 @@ module equalizer_tb;
   reg clk;  // boolean
   reg clk_enable;  // boolean
   reg rst;  // boolean
-  reg amplifier_enable = 1;
+  reg amplifier_enable = 0;
   /* hpf_7000hz, bpf_6000hz7000hz,... , bpf_1000hz2000hz, lpf_1000hz */
   wire [NUMBER_OF_FILTERS*GAIN_BITS-1:0] amplifier_gains;
 
@@ -232,6 +205,18 @@ module equalizer_tb;
       .filter_hpf_7000hz(filter_hpf_7000hz)
       // TODO: Remove this region (TEST ONLY)
   );
+
+  always @(posedge phase_1) begin
+    $fdisplay(outfile_filter_out, "%b", filter_out);  //write as binary
+    $fdisplay(outfile_lpf_1000hz, "%b", filter_lpf_1000hz);  //write as binary
+    $fdisplay(outfile_bpf_1000hz2000hz, "%b", filter_bpf_1000hz2000hz);  //write as binary
+    $fdisplay(outfile_bpf_2000hz3000hz, "%b", filter_bpf_2000hz3000hz);  //write as binary
+    $fdisplay(outfile_bpf_3000hz4000hz, "%b", filter_bpf_3000hz4000hz);  //write as binary
+    $fdisplay(outfile_bpf_4000hz5000hz, "%b", filter_bpf_4000hz5000hz);  //write as binary
+    $fdisplay(outfile_bpf_5000hz6000hz, "%b", filter_bpf_5000hz6000hz);  //write as binary
+    $fdisplay(outfile_bpf_6000hz7000hz, "%b", filter_bpf_6000hz7000hz);  //write as binary
+    $fdisplay(outfile_hpf_7000hz, "%b", filter_hpf_7000hz);  //write as binary
+  end
 
 
   // Block Statements

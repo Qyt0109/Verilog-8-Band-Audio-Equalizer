@@ -46,11 +46,6 @@ module amplifier #(
   │=> |ii_iiii_iiii_iiii_ii|                                   │
   └────────────────────────────────────────────────────────────┘
   */
-  wire signed [GAIN_BITS-1:0] w_gains[0:NUMBER_OF_FILTERS];
-  wire signed [PRODUCT_BITS-1:0] product[0:NUMBER_OF_FILTERS];
-  wire signed [PRODUCT_BITS-1:0] w_amplified_filter_ins[0:NUMBER_OF_FILTERS];
-  wire signed [FILTER_IN_BITS-1:0] w_converted_amplified_filter_ins[0:NUMBER_OF_FILTERS];
-
   localparam PRODUCT_BITS = FILTER_IN_BITS + GAIN_BITS;
   localparam PRODUCT_SIGN_BIT = PRODUCT_BITS - 1;
 
@@ -60,6 +55,11 @@ module amplifier #(
 
   localparam CONVERTED_PRODUCT_HIGH_BIT = GAIN_FRAC_BITS + FILTER_IN_BITS - 1;
   localparam CONVERTED_PRODUCT_LOW_BIT = GAIN_FRAC_BITS;
+
+  wire signed [GAIN_BITS-1:0] w_gains[0:NUMBER_OF_FILTERS];
+  wire signed [PRODUCT_BITS-1:0] product[0:NUMBER_OF_FILTERS];
+  wire signed [PRODUCT_BITS-1:0] w_amplified_filter_ins[0:NUMBER_OF_FILTERS];
+  wire signed [FILTER_IN_BITS-1:0] w_converted_amplified_filter_ins[0:NUMBER_OF_FILTERS];
 
   genvar filter_index;
   generate

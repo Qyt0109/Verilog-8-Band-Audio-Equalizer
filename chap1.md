@@ -3,7 +3,7 @@
       <a href="./README.md"><< CHƯƠNG TRƯỚC</a>
     </th>
     <th>
-      1/4
+      1/5
     </th>
     <th>
       <a href="./chap2.md">CHƯƠNG SAU >></a>
@@ -67,7 +67,7 @@ Sử dụng ngôn ngữ lập trình Python cùng với thư viện <a href="htt
       <a href="./README.md"><< CHƯƠNG TRƯỚC</a>
     </th>
     <th>
-      1/4
+      1/5
     </th>
     <th>
       <a href="./chap2.md">CHƯƠNG SAU >></a>

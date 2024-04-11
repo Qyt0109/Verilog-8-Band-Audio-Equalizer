@@ -17,7 +17,7 @@ module compute #(
 
     output signed [FILTER_OUT_BITS-1:0] filter_out  // output
 );
-  parameter PRODUCT_BITS = FILTER_IN_BITS + COEFF_BITS;
+  localparam PRODUCT_BITS = FILTER_IN_BITS + COEFF_BITS;
 
   // signed fixed-point 32.16. [-32768, 32768 - 1.52587890625e-05]
   wire signed [PRODUCT_BITS-1:0] product = delay_filter_in * coeff;
@@ -26,6 +26,7 @@ module compute #(
   wire signed [PRODUCT_BITS-1 + 2:0] sign_extended_product = $signed(
       {{2{product[PRODUCT_BITS-1]}}, product}
   );
+  reg signed [PRODUCT_BITS-1 + 2:0] acc_out;
   wire signed [PRODUCT_BITS-1 + 2:0] next_value_to_add = acc_out;
 
   // signed fixed-point 35.16. [-262144, 262144 - 1.52587890625e-05]
@@ -35,7 +36,6 @@ module compute #(
   wire signed [PRODUCT_BITS-1 + 2:0] acc_sum = add_temp[PRODUCT_BITS-1 + 2:0];  // Cut overflow bit off add_temp
 
   wire signed [PRODUCT_BITS-1 + 2:0] acc_in = (phase_min == 1) ? sign_extended_product : acc_sum;
-  reg signed [PRODUCT_BITS-1 + 2:0] acc_out;
 
   reg signed [PRODUCT_BITS-1 + 2:0] acc_final;
 
