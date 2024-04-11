@@ -4,7 +4,7 @@ from scipy.io import wavfile
 
 from wav import Wav
 
-def plot_frequency_spectrum(wav:Wav):
+def plot_frequency_spectrum(wav:Wav, save_path=None, is_show=True):
     # Take the absolute value of the FFT result
     fft_result = np.abs(np.fft.fft(wav.audio_data))
     
@@ -19,7 +19,11 @@ def plot_frequency_spectrum(wav:Wav):
     plt.ylabel('Magnitude')
     plt.title(wav.file_path)
     plt.grid(True)
-    plt.show()
+    if is_show:
+        plt.show()
+    if save_path:
+        plt.savefig(save_path)
+        print("Saved to ", save_path)
 
 if __name__ == "__main__":
     # Example usage

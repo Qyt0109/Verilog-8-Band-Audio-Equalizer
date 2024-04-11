@@ -3,6 +3,7 @@ module filter #(
     parameter FILTER_OUT_BITS = 16,
     parameter NUMBER_OF_FILTERS = 8,
     parameter GAIN_BITS = 2,
+    parameter GAIN_FRAC_BITS = 0,
     parameter COUNTER_MIN = 6'b000000,
     parameter COUNTER_MAX = 6'b111111,
     parameter COUNTER_BITS = $clog2(COUNTER_MAX),
@@ -67,8 +68,8 @@ module filter #(
   amplifier #(
       .NUMBER_OF_FILTERS(NUMBER_OF_FILTERS),
       .GAIN_BITS(GAIN_BITS),
-      .FILTER_IN_BITS(FILTER_IN_BITS),
-      .FILTER_OUT_BITS(FILTER_OUT_BITS)
+      .GAIN_FRAC_BITS(GAIN_FRAC_BITS),
+      .FILTER_IN_BITS(FILTER_IN_BITS)
   ) amplifier_inst (
       .en(amplifier_enable),
       .gains(amplifier_gains),

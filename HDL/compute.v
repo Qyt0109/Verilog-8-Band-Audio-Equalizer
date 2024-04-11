@@ -61,16 +61,42 @@ module compute #(
     end
   end
 
-  /*  Convert the output of the filter:
-        - rounding: floor
-        - overflow: saturate
+  /* rounding: floor, overflow: saturate
+  ┌───────────────────────────────────────────────────────────────────────────┐
+  │                                                                           │
+  │    ◀─────16──────▶        ◀──8──▶          ◀──────────24─────────▶        │
+  │   ┌┐                     ┌┐               ┌┐                              │
+  │   S├┬┬┬┬┬┬┬┬┬┬┬┬┬┬┐      S├┬┬┬┬┬┬┐        S├┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┐       │
+  │   └┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┘  *   └┴┴┴┴┴┤││    =   └┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┤││       │
+  │     ◀────────────▶         ◀──▶└┴┘          ◀──────────────────▶└┴┘       │
+  │           int              int ◀─▶                   int        ◀─▶       │
+  │                               frac                             frac       │
+  │                                                                           │
+  │                                                                    frac   │
+  │                                       ┌┐         ◀─────16──────▶    ◀─▶   │
+  │                              ===>     S├┬┬┬┬┐   ┌┬┬┬┬┬┬┬┬┬┬┬┬┬┬┬┐   ┌┬┐   │
+  │                                       └┴┴┴┴┴┘...└┴┴┴┴┴┴┴┴┴┴┴┴┴┴┴┘...│││   │
+  │                                                  ◀─────────────▶    └┴┘   │
+  │                                      overflow       coverted        ◀─▶   │
+  │                                     (saturate)       result        round  │
+  │                                                                   (floor) │
+  │                                                                           │
+  └───────────────────────────────────────────────────────────────────────────┘
   */
-  assign filter_out =
-      // positive overflow => stay at max signed integer 16 (saturate)
-      ((acc_final[PRODUCT_BITS-1 + 2] == 0) & (acc_final[PRODUCT_BITS-1 + 1:PRODUCT_BITS-1] != 2'b00)) ? {1'b0, {(FILTER_OUT_BITS-1){1'b1}}}: // 01111...111
-      // negative overflow => stay at min signed integer 16 (saturate)
-      ((acc_final[PRODUCT_BITS-1 + 2] == 1) & (acc_final[PRODUCT_BITS-1 + 1:PRODUCT_BITS-1] != 2'b11)) ? {1'b1, {(FILTER_OUT_BITS-1){1'b0}}}: // 10000...000
-      // if not overflow, only keep the 16 bit of signed integer (flooring)
-      acc_final[COEFF_FRAC_BITS+FILTER_OUT_BITS:COEFF_FRAC_BITS];
+  localparam ACC_FINAL_BITS = PRODUCT_BITS + 2;  // = FILTER_IN_BITS + COEFF_BITS + 2
+  localparam ACC_FINAL_SIGN_BIT = ACC_FINAL_BITS - 1;  // Location of Sign bit
+  localparam ACC_FINAL_CHECK_BIT_HIGH = ACC_FINAL_SIGN_BIT - 1; // Location of high bit of check region
+  localparam ACC_FINAL_CHECK_BIT_LOW = COEFF_FRAC_BITS + FILTER_OUT_BITS; // Location of low bit of check region
+  localparam ACC_FINAL_CHECK_BITS = ACC_FINAL_CHECK_BIT_HIGH - ACC_FINAL_CHECK_BIT_LOW + 1; // Number of bits of check region
 
+  localparam ACC_FINAL_CONVERTED_HIGH_BIT = COEFF_FRAC_BITS + FILTER_OUT_BITS - 1;
+  localparam ACC_FINAL_CONVERTED_LOW_BIT = COEFF_FRAC_BITS;
+
+  assign filter_out =
+      // positive overflow => stay at max signed integer (saturate)
+      ((acc_final[ACC_FINAL_SIGN_BIT] == 0) & (acc_final[ACC_FINAL_CHECK_BIT_HIGH:ACC_FINAL_CHECK_BIT_LOW] != {(ACC_FINAL_CHECK_BITS){1'b0}})) ? {1'b0, {(FILTER_OUT_BITS-1){1'b1}}}: // 01111...111
+      // negative overflow => stay at min signed integer (saturate)
+      ((acc_final[ACC_FINAL_SIGN_BIT] == 1) & (acc_final[ACC_FINAL_CHECK_BIT_HIGH:ACC_FINAL_CHECK_BIT_LOW] != {(ACC_FINAL_CHECK_BITS){1'b1}})) ? {1'b1, {(FILTER_OUT_BITS-1){1'b0}}}: // 10000...000
+      // if not overflow, round down by cutoff all unnecessary bits (flooring)
+      acc_final[ACC_FINAL_CONVERTED_HIGH_BIT:ACC_FINAL_CONVERTED_LOW_BIT];
 endmodule  //compute
