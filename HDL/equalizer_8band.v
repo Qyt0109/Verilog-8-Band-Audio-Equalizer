@@ -95,10 +95,6 @@ module equalizer_8band #(
       assign v_amplified_filter_ins[filter_index] = amplified_filter_ins[(filter_index+1)*FILTER_IN_BITS-1:filter_index*FILTER_IN_BITS];
       // endregion amplifier generate
 
-      // region compute generate
-      assign filtered_outs[(filter_index+1)*FILTER_OUT_BITS-1:filter_index*FILTER_OUT_BITS] = filtered_out[filter_index];
-      // endregion computer generate
-
       // region filter generate
       filter #(
           .FILTER_IN_BITS(FILTER_IN_BITS),

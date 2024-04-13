@@ -27,10 +27,10 @@ def plot_frequency_spectrum(wav:Wav, save_path=None, is_show=True):
 
 if __name__ == "__main__":
     # Example usage
-    file_path = "./test/o_tft_bin.wav"
-    wav = Wav(file_path=file_path)
-    plot_frequency_spectrum(wav=wav)
-
-    file_path = "./test/o_tft_x4_bin.wav"
-    wav = Wav(file_path=file_path)
-    plot_frequency_spectrum(wav=wav)
+    file_path = "./test.txt"
+    wav = Wav()
+    wav.channels = 1
+    wav.sample_rate = 16000
+    wav.sample_width = 16
+    wav.load_from_txt(file_path)
+    plot_frequency_spectrum(wav=wav, save_path="./o_test", is_show=False)

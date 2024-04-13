@@ -256,30 +256,11 @@ Chúng ta muốn kiểm soát vùng này, ví dụ tăng 100 lần biên độ l
 
 __Làm thế nào để đạt được điều này?__
 
-Để có thể kiểm soát được biên độ tín hiệu trong miền tần số thì sẽ hơi đau đầu chút vì không đơn giản chỉ là phép nhân các mẫu tín hiệu trong miền thời gian với một hệ số (factor/gain) nào đó đâu.
-
-Đây là điều sẽ xảy ra nếu chúng ta nhân trong miền thời gian:
-
-<img src="./Wav/imgs/hlf_mul100.png">
-
-Wow, tín hiệu đã hoàn toàn bị thay đổi, vùng tần số đáng ra bị cắt đã bị dôi lên và ảnh hưởng tới kết quả khi ghép các băng tần lại với nhau. Vậy là điều khiển 1 band nhưng lại ảnh hưởng tới các band khác:
-
-<img src="./Wav/imgs/hlf_mul100_combine.png">
-
-Điều này xảy ra vì phép nhân trong miền thời gian tương ứng với phép tích chập trong miền tần số và ngược lại.
-
-Vậy chúng ta có thể nghĩ tới một số cách như sau:
-- 1) Biến đổi các mẫu tín hiệu từ miền thời gian sang miền tần số, sau đó nhân trong miền tần số rồi biến đổi ngược trở lại về miền thời gian.
-  
-  <img src="./Wav/imgs/design0.png">
-  
-- 2) Tích chập các mẫu trong miền thời gian để tương ứng với nhân trong miền tần số.
-  
-  <img src="./Wav/imgs/design1.png">
-
-- ...
+Để có thể kiểm soát được biên độ tín hiệu trong miền tần số thì đơn giản chỉ là phép nhân các mẫu tín hiệu trong miền thời gian với một hệ số (factor/gain) trước khi đưa vào bộ lọc tương ứng.
 
 ###### c) Sơ đồ điều khiển băng tần dùng 8 bộ lọc
+
+![](./HDL/images/schematic.png)
 
 <table>
     <th>

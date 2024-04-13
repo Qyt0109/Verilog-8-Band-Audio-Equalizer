@@ -11,9 +11,8 @@
 </table>
 
 ## 5. Thử nghiệm
-### Thiết kế tuần tự tất thảy
-#### Thử nghiệm với testbench
-##### Tín hiệu xung delta Dirac (impulse)
+### 5.1. Thử nghiệm bộ lọc
+#### 5.1.1. Tín hiệu xung delta Dirac (impulse)
 
 <img src="./Wav/test/impulse.webp">
 
@@ -48,8 +47,8 @@ Phổ tín hiệu sau lọc:
 
 Sử dụng xung Dirac cho ta cái nhìn tổng quan nhất về sự ảnh hưởng của bộ lọc lên miền tần số vì tất cả năng lượng phổ của nó đều có giá trị bằng nhau và xuyên suốt mọi tần số có thể.
 
-##### File âm thanh
-###### a) 2000 mẫu đầu tiên
+#### 5.1.2. File âm thanh
+##### 5.1.2.1. 2000 mẫu đầu tiên
 Sử dụng file <a href="./Wav/wavs/tft.txt">tft.txt</a> được tạo ra từ việc đọc các mẫu tín hiệu trong file WAV gốc <a href="./Wav/wavs/tft.wav">tft.txt</a> bằng các phương thức được cung cấp trong lớp Wav tại code <a href="./Wav/wav.py">wav.py</a>.
 
 Testbench đọc 2000 mẫu tín hiệu đầu tiên và đưa vào thực thể uut của module low pass filter N=63 với tần số cắt fc = 1000 KHz. Kết quả mô phỏng:
@@ -75,7 +74,7 @@ Phổ tín hiệu sau lọc:
 
 Vẫn có thể nhận thấy được rò rỉ tần số tại dải chuyển tiếp, nhưng để đánh giá thì cần sử dụng các phương pháp tính toán chứ không "nhìn bằng mắt ta có" được.
 
-###### b) Toàn bộ file âm thanh
+##### 5.1.2.2. Toàn bộ file âm thanh
 
 
 
@@ -91,6 +90,133 @@ https://github.com/Qyt0109/Verilog-8-Band-Audio-Equalizer/assets/92682344/d1bc33
 <img src="./Wav/test/full.png">
 <img src="./Wav/test/i_full_tft.png">
 <img src="./Wav/test/o_full_tft.png">
+
+### 5.2. Thử nghiệm bộ equalizer 8 band
+Thử nghiệm với file [](./HDL/Test8Band/test.txt) 2000 mẫu âm thanh:
+
+Phổ gốc của file tín hiệu:
+
+![](./HDL/images/test_2000/o_test.png)
+
+#### 5.2.1. Tắt gains
+
+Không sử dụng gain để làm tăng năng lượng của các dải tần, ta có phổ của tín hiệu đầu ra sau khi đi qua bộ equalizer:
+
+![](./HDL/images/test_2000/o_filter_out.png)
+
+Phổ tần số tín hiệu đầu ra của từng bộ lọc trong bộ equalizer:
+
+Low pass filter 1000 Hz:
+
+![](./HDL/images/test_2000/o_lpf_1000hz.png)
+
+Band pass filter 1000 Hz - 2000 Hz:
+
+![](./HDL/images/test_2000/o_bpf_1000hz2000hz.png)
+
+Band pass filter 2000 Hz - 3000 Hz:
+
+![](./HDL/images/test_2000/o_bpf_2000hz3000hz.png)
+
+Band pass filter 3000 Hz - 4000 Hz:
+
+![](./HDL/images/test_2000/o_bpf_3000hz4000hz.png)
+
+Band pass filter 4000 Hz - 5000 Hz:
+
+![](./HDL/images/test_2000/o_bpf_4000hz5000hz.png)
+
+Band pass filter 5000 Hz - 6000 Hz:
+
+![](./HDL/images/test_2000/o_bpf_5000hz6000hz.png)
+
+Band pass filter 6000 Hz - 7000 Hz:
+
+![](./HDL/images/test_2000/o_bpf_6000hz7000hz.png)
+
+High pass filter 7000 Hz:
+
+![](./HDL/images/test_2000/o_hpf_7000hz.png)
+
+#### 5.2.2. Bật hệ số gain
+
+#### 5.2.2.1. Gain 1 0 0 1 0 0 1 1 (lần)
+Sử dụng hệ số gain cho các band từ low pass đến high pass lần lượt là 1 0 0 1 0 0 1 1 (lần) cho ta tín hiệu đầu ra có phổ tần số:
+
+![](./HDL/images/test_2000_gain_10010011/o_filter_out.png)
+
+Phổ tần số tín hiệu đầu ra của từng bộ lọc trong bộ equalizer:
+
+Low pass filter 1000 Hz:
+
+![](./HDL/images/test_2000_gain_10010011/o_lpf_1000hz.png)
+
+Band pass filter 1000 Hz - 2000 Hz:
+
+![](./HDL/images/test_2000_gain_10010011/o_bpf_1000hz2000hz.png)
+
+Band pass filter 2000 Hz - 3000 Hz:
+
+![](./HDL/images/test_2000_gain_10010011/o_bpf_2000hz3000hz.png)
+
+Band pass filter 3000 Hz - 4000 Hz:
+
+![](./HDL/images/test_2000_gain_10010011/o_bpf_3000hz4000hz.png)
+
+Band pass filter 4000 Hz - 5000 Hz:
+
+![](./HDL/images/test_2000_gain_10010011/o_bpf_4000hz5000hz.png)
+
+Band pass filter 5000 Hz - 6000 Hz:
+
+![](./HDL/images/test_2000_gain_10010011/o_bpf_5000hz6000hz.png)
+
+Band pass filter 6000 Hz - 7000 Hz:
+
+![](./HDL/images/test_2000_gain_10010011/o_bpf_6000hz7000hz.png)
+
+High pass filter 7000 Hz:
+
+![](./HDL/images/test_2000_gain_10010011/o_hpf_7000hz.png)
+
+#### 5.2.2.2. Gain 1 0 0 10.75 0 0 5 5 (lần)
+Sử dụng hệ số gain cho các band từ low pass đến high pass lần lượt là 1 0 0 10.75 0 0 5 5 (lần) cho ta tín hiệu đầu ra có phổ tần số:
+
+![](./HDL/images/test_2000_gain_10010_750055/o_filter_out.png)
+
+Phổ tần số tín hiệu đầu ra của từng bộ lọc trong bộ equalizer:
+
+Low pass filter 1000 Hz:
+
+![](./HDL/images/test_2000_gain_10010_750055/o_lpf_1000hz.png)
+
+Band pass filter 1000 Hz - 2000 Hz:
+
+![](./HDL/images/test_2000_gain_10010_750055/o_bpf_1000hz2000hz.png)
+
+Band pass filter 2000 Hz - 3000 Hz:
+
+![](./HDL/images/test_2000_gain_10010_750055/o_bpf_2000hz3000hz.png)
+
+Band pass filter 3000 Hz - 4000 Hz:
+
+![](./HDL/images/test_2000_gain_10010_750055/o_bpf_3000hz4000hz.png)
+
+Band pass filter 4000 Hz - 5000 Hz:
+
+![](./HDL/images/test_2000_gain_10010_750055/o_bpf_4000hz5000hz.png)
+
+Band pass filter 5000 Hz - 6000 Hz:
+
+![](./HDL/images/test_2000_gain_10010_750055/o_bpf_5000hz6000hz.png)
+
+Band pass filter 6000 Hz - 7000 Hz:
+
+![](./HDL/images/test_2000_gain_10010_750055/o_bpf_6000hz7000hz.png)
+
+High pass filter 7000 Hz:
+
+![](./HDL/images/test_2000_gain_10010_750055/o_hpf_7000hz.png)
 
 <table>
     <th>

@@ -26,11 +26,7 @@
 
 #### 5.1.2. Thiết kế tuần tự tất thảy (fully serial)
 
-##### Đường ống tuần tự hoá thiết kế (Serial pipeline the design)
-
-<img src="./HDL/images/serial_pipeline.jpg">
-
-##### Tuần tự tất thảy (fully serial)
+![](./HDL/images/serial.png)
 
 #### 5.1.3. Tuần tự thành phần/thác đổ (partly/cascade serial)
 

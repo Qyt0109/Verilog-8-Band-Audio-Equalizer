@@ -8,8 +8,9 @@ module equalizer_tb;
   //localparam MAX_ADDRESS = 300;
   //localparam INPUT_TXT = "./Test8Band/impulse.txt";
 
-  localparam MAX_ADDRESS = 3000;
-  localparam INPUT_TXT = "./Test8Band/tft.txt";
+  localparam MAX_ADDRESS = 2000 - 1;
+  // localparam INPUT_TXT = "./Test8Band/tft.txt";
+  localparam INPUT_TXT = "./Test8Band/test.txt";
 
   task filter_in_data_log_task;
     input clk;
@@ -67,9 +68,9 @@ module equalizer_tb;
   endtask  // filter_out_task
 
   // Constants
-  parameter clk_high = 5;
-  parameter clk_low = 5;
-  parameter clk_period = 10;
+  parameter clk_high = 10;
+  parameter clk_low = 10;
+  parameter clk_period = 20;
   parameter clk_hold = 2;
 
 
@@ -142,20 +143,20 @@ module equalizer_tb;
   reg clk;  // boolean
   reg clk_enable;  // boolean
   reg rst;  // boolean
-  reg amplifier_enable = 0;
+  reg amplifier_enable = 1;
   /* hpf_7000hz, bpf_6000hz7000hz,... , bpf_1000hz2000hz, lpf_1000hz */
   wire [NUMBER_OF_FILTERS*GAIN_BITS-1:0] amplifier_gains;
 
   wire [GAIN_BITS-1:0] amplifier_gain[0:NUMBER_OF_FILTERS];
   // gain 8.2 range [-32, 32 - 0.25]
-  assign amplifier_gain[0] = (2 ** GAIN_FRAC_BITS) * 0.25;
-  assign amplifier_gain[1] = (2 ** GAIN_FRAC_BITS) * 0.5;
-  assign amplifier_gain[2] = (2 ** GAIN_FRAC_BITS) * 0.75;
-  assign amplifier_gain[3] = (2 ** GAIN_FRAC_BITS) * 1;
-  assign amplifier_gain[4] = (2 ** GAIN_FRAC_BITS) * 1.25;
-  assign amplifier_gain[5] = (2 ** GAIN_FRAC_BITS) * 1.5;
-  assign amplifier_gain[6] = (2 ** GAIN_FRAC_BITS) * 1.75;
-  assign amplifier_gain[7] = (2 ** GAIN_FRAC_BITS) * 2;
+  assign amplifier_gain[0] = (2 ** GAIN_FRAC_BITS) * 1;
+  assign amplifier_gain[1] = (2 ** GAIN_FRAC_BITS) * 0;
+  assign amplifier_gain[2] = (2 ** GAIN_FRAC_BITS) * 0;
+  assign amplifier_gain[3] = (2 ** GAIN_FRAC_BITS) * 10.75;
+  assign amplifier_gain[4] = (2 ** GAIN_FRAC_BITS) * 0;
+  assign amplifier_gain[5] = (2 ** GAIN_FRAC_BITS) * 0;
+  assign amplifier_gain[6] = (2 ** GAIN_FRAC_BITS) * 5;
+  assign amplifier_gain[7] = (2 ** GAIN_FRAC_BITS) * 5;
 
   generate
     for (

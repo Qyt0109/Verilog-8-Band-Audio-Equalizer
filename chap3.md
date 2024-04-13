@@ -175,11 +175,6 @@ Sau khi các mẫu được lượng tử hoá, khi so sánh đáp ứng tần s
 
 => __CHỐT: signed fixed-point 16 bit 16 bit fraction__
 
-##### 4.1.1.3. Phép nhân số nguyên với số thực
-
-Các mẫu âm thanh (đầu vào) của hệ thống là 16 bit số nguyên có dấu, trong khi đó các hệ số bộ lọc lại là 16 bit số thực có dấu, chủ yếu biểu diễn giá trị thập phân. Việc tính toán phép nhân cho 2 loại dữ liệu trên có thể được phân ra thành một số cách:
-- TODO: cách nhân
-
 
 <table>
     <th>
