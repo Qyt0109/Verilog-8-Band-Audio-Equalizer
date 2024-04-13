@@ -1,2 +1,0 @@
-Warning (10268): Verilog HDL information at equalizer_8band.v(127): always construct contains both blocking and non-blocking assignments File: //mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/equalizer_8band.v Line: 127
-Warning (10268): Verilog HDL information at equalizer.v(137): always construct contains both blocking and non-blocking assignments File: //mac/AllFiles/Applications/CODESTUFF/OctaTune/HDL/equalizer.v Line: 137
